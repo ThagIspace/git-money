@@ -16,7 +16,7 @@ const ExpenseSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        default:"expense"
+        default: "expense"
     },
     date: {
         type: Date,
@@ -30,10 +30,10 @@ const ExpenseSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: true,
+        required: false,
         maxLength: 20,
         trim: true
     },
-}, {timestamps: true})
+}, { timestamps: true })
 
 module.exports = mongoose.model('Expense', ExpenseSchema)
