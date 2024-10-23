@@ -18,7 +18,7 @@ const TransactionTable = () => {
     return (
         <Card className="mb-4">
             <Card.Body>
-                <Card.Title>Transactions</Card.Title>
+                <Card.Title>Giao dịch</Card.Title>
                 <ListGroup variant="flush">
                     {expenses.map((expense, index) => (
                         <ListGroupItem key={index} className="d-flex justify-content-between align-items-center">

@@ -3,31 +3,30 @@ import { Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import '../assets/style/nav.css';
 
-const Sidebar = ({ visible }) => {
+const Sidebar = ({ visible, toggleSidebar }) => {
     return (
         <Nav className={`sidebar ${visible ? 'visible' : 'hidden'}`}>
             <div className="sidebar-sticky">
                 <Nav.Item>
-                    <Link to="/" className="nav-link">Bảng Điều Khiển</Link>
+                    <Link to="/" className="btn btn-block nav-link">
+                        Bảng Điều Khiển
+                    </Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Link to="/add-expense" className="nav-link">Thêm Chi Phí</Link>
+                    <Link to="/add-expense" className="btn  btn-block nav-link">
+                        Thêm Chi Phí
+                    </Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Link to="/add-income" className="nav-link">Thêm Thu Nhập</Link>
+                    <Link to="/add-income" className="btn btn-block nav-link">
+                        Thêm Thu Nhập
+                    </Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Link to="/add-transit" className="nav-link">Thêm Giao Dịch</Link>
+                    <Link to="/add-transit" className="btn btn-block nav-link">
+                        Thêm Giao Dịch
+                    </Link>
                 </Nav.Item>
-                {/* <Nav.Item>
-                    <Link to="/list-expense" className="nav-link">Danh Sách Chi Phí</Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Link to="/list-income" className="nav-link">Danh Sách Thu Nhập</Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Link to="/list-transit" className="nav-link">Danh Sách Giao Dịch</Link>
-                </Nav.Item> */}
             </div>
         </Nav>
     );

@@ -4,6 +4,8 @@ import { Link as ScrollLink } from 'react-scroll';
 import '../assets/style/homeP.css'; // Import file CSS cho style
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faYoutube, faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import image1 from '../assets/imgs/img1.jpg';
+
 
 const HomeP = () => {
     return (
@@ -65,7 +67,7 @@ const HomeP = () => {
 
                     {/* Add the uploaded image */}
                     <div className="overview-image-container">
-                        <img src="image1.png" alt="Overview" className="overview-image" />
+                        <img src={image1} alt="Overview" className="overview-image" />
                     </div>
                 </Container>
             </div>
