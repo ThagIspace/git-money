@@ -6,7 +6,7 @@ const TopBar = ({ onToggleSidebar }) => {
     const handleLogout = () => {
         // Logic xử lý đăng xuất
         console.log('User logged out');
-        window.location.href = '/login';
+        window.location.href = '/home';
     };
 
     return (

@@ -5,7 +5,7 @@ import { ExpenseContext } from '../context/ExpenseContext';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import Sidebar from '../components/Sidebar';
 import TopBar from '../components/Topbar';
-import { BalanceChart } from '../Charts/BalanceChart';
+import { ExpenseChart } from '../Charts/ExpenseChart';
 import TransactionTable from '../components/TransactionTable';
 import TransactionTable2 from '../components/TransactionTable2';
 import Charts from '../Charts/Charts';
@@ -98,21 +98,26 @@ const DashboardP = () => {
                         </Col>
                     </Row>
 
-                    {/* Gọi biểu đồ từ Charts */}
-                    <Charts totalIncome={totalIncome} totalExpense={totalExpense} barData={barData} />
-
                     <Row>
-                        <Col md={12}>
+                        {/* Left Chart (from Charts) */}
+                        <Col md={6}>
+                            <Charts totalIncome={totalIncome} totalExpense={totalExpense} barData={barData} />
+
+                        </Col>
+
+                        {/* Right Chart (ExpenseChart) */}
+                        <Col md={6}>
                             <Card className="mb-4 mt-4">
                                 <Card.Body>
                                     <Card.Title>Số Dư Theo Thời Gian</Card.Title>
                                     <div style={{ height: '400px' }}>
-                                        <BalanceChart />
+                                        <ExpenseChart />
                                     </div>
                                 </Card.Body>
                             </Card>
                         </Col>
                     </Row>
+
 
                     {/* Thêm 2 bảng giao dịch nằm kế bên nhau */}
                     <Row>

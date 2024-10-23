@@ -1,59 +1,68 @@
 import React from 'react';
-import { PieChart, Pie, Cell, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
+import {
+    PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer
+} from 'recharts';
 import { Card, Col, Row } from 'react-bootstrap';
 
-const Charts = ({ totalIncome, totalExpense, barData }) => {
-    // Dữ liệu cho biểu đồ tròn
+// Utility function to format numbers with '.' separator and VNĐ currency
+const formatCurrency = (value) => {
+    return value.toLocaleString('vi-VN') + 'đ';
+};
+
+// Custom label for PieChart to render percentage inside the chart
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * (Math.PI / 180));
+    const y = cy + radius * Math.sin(-midAngle * (Math.PI / 180));
+
+    return (
+        <text
+            x={x}
+            y={y}
+            fill="black"
+            textAnchor={x > cx ? 'start' : 'end'}
+            dominantBaseline="central"
+        >
+            {`${(percent * 100).toFixed(1)}%`}
+        </text>
+    );
+};
+
+const Charts = ({ totalIncome, totalExpense }) => {
+    // Data for the PieChart
     const data = [
-        { name: 'Income', value: totalIncome },
-        { name: 'Expenses', value: totalExpense }
+        { name: 'Thu nhập', value: totalIncome },
+        { name: 'Chi tiêu', value: totalExpense }
     ];
 
-    const COLORS = ['#0088FE', '#FF8042']; // Màu sắc cho biểu đồ
+    const COLORS = ['#0088FE', '#FF8042']; // Colors for Pie chart
 
     return (
         <Row>
-            {/* Biểu đồ tròn */}
-            <Col md={6}>
+            {/* Pie Chart */}
+            <Col md={12}>
                 <Card className="mb-4 mt-4">
                     <Card.Body>
-                        <Card.Title>Thu Nhập so với Chi Tiêu</Card.Title>
-                        <PieChart width={400} height={400}>
-                            <Pie
-                                data={data}
-                                cx={200}
-                                cy={200}
-                                labelLine={false}
-                                outerRadius={150}
-                                fill="#8884d8"
-                                dataKey="value"
-                            >
-                                {data.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                ))}
-                            </Pie>
-                            <Tooltip />
-                            <Legend />
-                        </PieChart>
-                    </Card.Body>
-                </Card>
-            </Col>
-
-            {/* Biểu đồ cột */}
-            <Col md={6}>
-                <Card className="mb-4 mt-4">
-                    <Card.Body>
-                        <Card.Title>Thu Nhập hàng tháng so với Chi Tiêu</Card.Title>
+                        <Card.Title>Thu nhập và Chi tiêu</Card.Title>
                         <ResponsiveContainer width="100%" height={400}>
-                            <BarChart data={barData}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="name" />
-                                <YAxis />
-                                <Tooltip />
+                            <PieChart>
+                                <Pie
+                                    data={data}
+                                    cx="50%"
+                                    cy="50%"
+                                    labelLine={false}
+                                    outerRadius={150}
+                                    label={renderCustomizedLabel} // Show percentage inside the pie
+                                    fill="#8884d8"
+                                    dataKey="value"
+                                >
+                                    {data.map((entry, index) => (
+                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                    ))}
+                                </Pie>
+                                <Tooltip formatter={formatCurrency} /> {/* Format the currency with 'VNĐ' and '.' */}
                                 <Legend />
-                                <Bar dataKey="income" fill="#0088FE" />
-                                <Bar dataKey="expense" fill="#FF8042" />
-                            </BarChart>
+                            </PieChart>
                         </ResponsiveContainer>
                     </Card.Body>
                 </Card>
