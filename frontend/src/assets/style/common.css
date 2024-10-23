@@ -1,0 +1,46 @@
+/* Login & Register Page */
+.login-page {
+    background-color: #007bff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input-group-text {
+    background-color: white;
+    border-right: none;
+}
+
+.form-control {
+    border-left: none;
+}
+
+input-group .form-control:focus {
+    box-shadow: none;
+}
+
+.text-primary {
+    color: white !important;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+.card h4 {
+    font-size: 1.5rem;
+}
+
+button {
+    border-radius: 25px;
+}
+
+a {
+    color: #ffffff !important;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+/* End Login & Register */

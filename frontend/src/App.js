@@ -6,6 +6,8 @@ import DashboardP from './pages/DashboardP.js';
 import AddExpenseP from './pages/AddExpenseP';
 import AddIncomeP from './pages/AddIncomeP';
 import AddTransactionP from './pages/AddTransactionP.js';
+import LoginP from './pages/LoginP.js';
+import RegisterP from './pages/RegisterP.js';
 
 //List
 import ExpenseList from '../src/components/ExpenseList.js'
@@ -18,10 +20,12 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<DashboardP />} />
-        <Route path="/123" element={<HomeP />} />
+        <Route path="/home" element={<HomeP />} />
         <Route path="/add-expense" element={<AddExpenseP />} />
         <Route path="/add-income" element={<AddIncomeP />} />
         <Route path="/add-transit" element={<AddTransactionP />} />
+        <Route path="/login" element={<LoginP />} />
+        <Route path="/register" element={<RegisterP />} />
 
         <Route path="/list-expense" element={<ExpenseList />} />
         <Route path="/list-income" element={<IncomeList />} />

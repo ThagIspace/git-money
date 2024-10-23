@@ -8,28 +8,6 @@
 }
 
 /* Navbar styling */
-.navbar {
-    background-color: #007bff;
-    padding: 20px 0;
-}
-
-.navbar-brand {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
-}
-
-.nav-link {
-    color: white;
-    font-size: 1rem;
-    font-weight: bold;
-}
-
-.wallet-icon {
-    width: 150px;
-    height: 150px;
-    margin-bottom: 20px;
-}
 
 .main-section {
     padding: 60px 0;
@@ -77,5 +55,201 @@
     .main-btn {
         font-size: 1rem;
         padding: 8px 20px;
+    }
+}
+.hero-section {
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    padding: 5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 20vh;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hero-section p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.footer {
+    background-color: #f8f9fa;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    color: #000000;
+}
+
+.overview-section {
+    background-color: #f0f4f8;
+    padding: 3rem 1rem;
+    text-align: center;
+    color: black;
+}
+
+.overview-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.overview-section p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.overview-image-container {
+    margin-top: 2rem;
+}
+
+.overview-image {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+html,
+body {
+    height: auto; /* Đảm bảo rằng trang có thể mở rộng theo nội dung */
+    overflow: auto;
+}
+/* Contact Section Styles */
+.contact-section {
+    background-color: #007bff; /* Màu xanh dương đậm cho phần nền */
+    color: #fff; /* Màu chữ trắng để tương phản với nền */
+    padding: 4rem 1rem;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ để nổi bật */
+}
+
+.contact-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #fff; /* Màu chữ trắng cho tiêu đề */
+}
+
+.contact-section p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    color: #e9ecef; /* Màu chữ nhẹ hơn để dễ đọc */
+}
+
+/* Styling for the form */
+.contact-section .form-control {
+    border-radius: 0.5rem;
+    border: none;
+    padding: 1rem;
+    background-color: #f8f9fa; /* Màu nền nhẹ cho input */
+    color: #333; /* Màu chữ tối cho input */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    margin-bottom: 1rem;
+}
+
+.contact-section .form-control:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Hiệu ứng khi focus */
+}
+
+/* Button styles */
+.contact-section .btn {
+    padding: 0.75rem 2rem; /* Increase padding to add more space around the text */
+    font-size: 1.1rem;
+    border-radius: 50px;
+    background-color: #ffc107; /* Maintain color */
+    border: none;
+    color: #333;
+    transition: background-color 0.3s ease;
+    margin: 0.5rem; /* Add some margin around the button */
+}
+
+.contact-section .btn:hover {
+    background-color: #e0a800; /* Hiệu ứng hover cho nút */
+}
+
+/* Layout tweaks */
+.contact-section .form-group {
+    margin-bottom: 1.5rem;
+}
+.shadow-sm {
+    background-color: #007bff;
+}
+.benefits img {
+    padding-top: 50px;
+    width: 100px;
+    margin-bottom: 15px;
+}
+.benefits h4 {
+    font-size: 1.5rem;
+    color: #fff;
+}
+.benefits p {
+    color: #e9ecef;
+}
+.benefits .col-md-4 {
+    border: 2px solid #ddd; /* Màu sắc và độ dày của border */
+    border-radius: 8px; /* Tạo độ cong nhẹ ở các góc */
+    padding: 20px; /* Khoảng cách bên trong giữa nội dung và border */
+    margin-bottom: 20px; /* Khoảng cách giữa các mục */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng khi hover */
+}
+
+/* Hiệu ứng hover */
+.benefits .col-md-4:hover {
+    transform: scale(1.05); /* Phóng to nhẹ khi hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm đổ bóng */
+}
+.navbar {
+    background-color: #006aff32; /* Màu xanh dương */
+}
+.hero-section {
+    padding-top: 80px;
+    margin-bottom: 80px; /* Điều chỉnh theo chiều cao của navbar */
+}
+.navbar-logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    background-color: transparent; /* Đảm bảo không có nền */
+}
+
+/* CSS for the logo in the hero section */
+.hero-logo {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    background-color: transparent; /* Đảm bảo không có nền */
+}
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%; /* Đảm bảo navbar chiếm toàn bộ chiều rộng */
+    z-index: 1000; /* Giá trị z-index cao để đè lên các phần tử khác */
+}
+.navbar .btn-outline-primary {
+    color: white; /* Màu chữ */
+    border-color: white; /* Màu viền */
+}
+/* Social icons styling */
+.social-icons a {
+    color: #000; /* Color for the icons */
+    transition: color 0.3s;
+}
+
+.social-icons a svg {
+    width: 32px; /* Increase the width */
+    height: 32px; /* Increase the height */
+    fill: #fff; /* Ensure the icons are filled with the correct color */
+}
+
+/* Điều chỉnh màu nền của Navbar khi ở chế độ responsive */
+@media (max-width: 992px) {
+    .navbar {
+        background-color: #007bff; /* Đặt màu nền không trong suốt */
     }
 }
