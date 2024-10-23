@@ -11,6 +11,8 @@ import AddTransactionP from './pages/AddTransactionP.js';
 import ExpenseList from '../src/components/ExpenseList.js'
 import IncomeList from '../src/components/IncomeList.js'
 import TransactionList from '../src/components/TransactionList.js'
+import Login from './components/Login.js';
+import Register from './components/Register.js';
 
 
 const App = () => {
@@ -22,7 +24,8 @@ const App = () => {
         <Route path="/add-expense" element={<AddExpenseP />} />
         <Route path="/add-income" element={<AddIncomeP />} />
         <Route path="/add-transit" element={<AddTransactionP />} />
-
+        <Route path="/login" element={<Login/>} />
+        <Route path="/register" element={<Register/>} />
         <Route path="/list-expense" element={<ExpenseList />} />
         <Route path="/list-income" element={<IncomeList />} />
         <Route path="/list-transit" element={<TransactionList />} />
