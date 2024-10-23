@@ -10,7 +10,6 @@ const AddIncomeP = () => {
     const [isSidebarVisible, setSidebarVisible] = useState(false);
     const [title, setTitle] = useState('');
     const [amount, setAmount] = useState('');
-    const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
     const [date, setDate] = useState(new Date().toISOString().split('T')[0]); // Ngày hiện tại
 
@@ -23,7 +22,6 @@ const AddIncomeP = () => {
         const income = {
             title,
             amount: Number(amount.replace(/\./g, '')), // Chuyển đổi sang số
-            category,
             description: description || ' ',
             date
         };
@@ -31,7 +29,6 @@ const AddIncomeP = () => {
         addIncome(income); // Gọi hàm để thêm thu nhập
         setTitle('');
         setAmount('');
-        setCategory('');
         setDescription('');
         setDate(new Date().toISOString().split('T')[0]
         );
@@ -82,17 +79,6 @@ const AddIncomeP = () => {
                                                         const formattedValue = new Intl.NumberFormat('vi-VN').format(value);
                                                         setAmount(formattedValue);
                                                     }}
-                                                    required
-                                                />
-                                            </Form.Group>
-
-                                            <Form.Group controlId="category">
-                                                <Form.Label>Danh Mục</Form.Label>
-                                                <Form.Control
-                                                    type="text"
-                                                    placeholder="Nhập danh mục"
-                                                    value={category}
-                                                    onChange={(e) => setCategory(e.target.value)}
                                                     required
                                                 />
                                             </Form.Group>

@@ -38,7 +38,6 @@ const IncomeList = () => {
                         <TableRow>
                             <TableCell>Tiêu Đề</TableCell>
                             <TableCell>Số Tiền</TableCell>
-                            <TableCell>Danh Mục</TableCell>
                             <TableCell>Mô Tả</TableCell>
                             <TableCell>Ngày</TableCell>
                             <TableCell>Hành Động</TableCell>
@@ -51,7 +50,6 @@ const IncomeList = () => {
                                 <TableCell>
                                     {income.amount ? `${income.amount.toLocaleString('vi-VN')} đ` : 'N/A'}
                                 </TableCell>
-                                <TableCell>{income.category}</TableCell>
                                 <TableCell>{income.description}</TableCell>
                                 <TableCell>{new Date(income.date).toLocaleDateString()}</TableCell>
                                 <TableCell>
