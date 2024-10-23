@@ -1,0 +1,97 @@
+/* Topbar styles */
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #2196f3; /* Blue background */
+    color: white;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000; /* Ensures topbar stays above sidebar */
+    height: 60px; /* Adjust the height if necessary */
+}
+
+.menu-icon {
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.title {
+    font-size: 1.25rem;
+    margin-left: 10px; /* Space between icon and title */
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 250px;
+    position: fixed;
+    top: 60px; /* Aligns with the topbar */
+    left: 0;
+    height: calc(100% - 60px); /* Full height minus the topbar */
+    background-color: #f8f9fa;
+    padding-top: 20px;
+    transition: transform 0.3s ease;
+    z-index: 500; /* Sidebar beneath topbar but above content */
+    overflow-y: auto; /* Add scrolling if sidebar content overflows */
+}
+
+.sidebar.hidden {
+    transform: translateX(-100%); /* Hide sidebar */
+}
+
+.sidebar.visible {
+    transform: translateX(0); /* Show sidebar */
+}
+
+/* Main content styles */
+.main-content {
+    margin-left: 250px; /* Default left margin for when sidebar is visible */
+    transition: margin-left 0.3s ease;
+    padding-top: 60px; /* Prevent overlap with topbar */
+}
+
+.main-content.full {
+    margin-left: 0; /* Full width when sidebar is hidden */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%; /* Full-width sidebar on small screens */
+    }
+
+    .main-content {
+        margin-left: 0; /* Full width for main content on small screens */
+    }
+}
+
+/* Button */
+.logout-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .logout-btn {
+        padding: 8px 15px; /* Giảm kích thước padding cho màn hình nhỏ hơn */
+        font-size: 14px; /* Giảm kích thước chữ */
+        margin-right: 5px; /* Giảm khoảng cách */
+    }
+}
+
+@media (max-width: 480px) {
+    .logout-btn {
+        padding: 6px 10px; /* Kích thước nhỏ hơn cho màn hình điện thoại */
+        font-size: 12px; /* Giảm kích thước chữ */
+    }
+}
