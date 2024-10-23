@@ -1,15 +1,15 @@
-import React, { useState, useContext, useEffect } from 'react';
+// DashboardP.js
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { IncomeContext } from '../context/IncomeContext';
 import { ExpenseContext } from '../context/ExpenseContext';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import Sidebar from '../components/Sidebar';
-import TopBar from '../components/Topbar';
 import { ExpenseChart } from '../Charts/ExpenseChart';
 import TransactionTable from '../components/TransactionTable';
 import TransactionTable2 from '../components/TransactionTable2';
 import Charts from '../Charts/Charts';
-import '../assets/style/nav.css';
+import '../assets/style/sidebar.css';
+import Nav from '../components/Nav';
 
 const DashboardP = () => {
     const [isSidebarVisible, setSidebarVisible] = useState(false);
@@ -51,83 +51,89 @@ const DashboardP = () => {
 
     return (
         <Container fluid>
-            <TopBar onToggleSidebar={toggleSidebar} />
             <Row>
-                <Col
-                    md={3}
-                    className={`sidebar-col ${isSidebarVisible ? 'visible' : 'hidden'}`}
-                    style={{ padding: 0 }}
-                >
-                    <Sidebar visible={isSidebarVisible} />
-                </Col>
-                <Col
-                    md={isSidebarVisible ? 9 : 12}
-                    className={`main-content ${isSidebarVisible ? '' : 'full'}`}
-                    style={{ transition: 'all 0.3s ease' }}
-                >
-                    <Row>
-                        <Col md={4}>
-                            <Card className="mb-4 mt-4">
-                                <Card.Body>
-                                    <Card.Title>Số Dư</Card.Title>
-                                    <Card.Text>
-                                        {balance.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                        <Col md={4}>
-                            <Card className="mb-4 mt-4">
-                                <Card.Body>
-                                    <Card.Title>Tổng Thu Nhập</Card.Title>
-                                    <Card.Text>
-                                        {totalIncome.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                        <Col md={4}>
-                            <Card className="mb-4 mt-4">
-                                <Card.Body>
-                                    <Card.Title>Tổng Chi Tiêu</Card.Title>
-                                    <Card.Text>
-                                        {totalExpense.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    </Row>
+                <Col>
+                    <div className="MainDiv">
+                        <div className={`d-flex ${isSidebarVisible ? '' : 'toggled'}`} id="wrapper">
+                            <div className="bg-light border-right" id="sidebar-wrapper">
+                                <div className="sidebar-heading">Easy Budget</div>
+                                <hr></hr>
+                                <div className="list-group list-group-flush">
+                                    <a href="/" className="list-group-item list-group-item-action bg-light">Dashboard</a>
+                                    <a href="add-income" className="list-group-item list-group-item-action bg-light">Tạo thu nhập</a>
+                                    <a href="add-expense" className="list-group-item list-group-item-action bg-light">Tạo chi tiêu</a>
+                                    <a href="/add-transit" className="list-group-item list-group-item-action bg-light">Tạo giao dịch</a>
+                                </div>
+                            </div>
 
-                    <Row>
-                        {/* Left Chart (from Charts) */}
-                        <Col md={6}>
-                            <Charts totalIncome={totalIncome} totalExpense={totalExpense} barData={barData} />
+                            <div id="page-content-wrapper">
+                                <Nav toggleSidebar={toggleSidebar} />
+                                <div className="container-fluid">
+                                    <Row>
+                                        <Col md={4}>
+                                            <Card className="mb-4 mt-4">
+                                                <Card.Body>
+                                                    <Card.Title>Số Dư</Card.Title>
+                                                    <Card.Text>
+                                                        {balance.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                                                    </Card.Text>
+                                                </Card.Body>
+                                            </Card>
+                                        </Col>
+                                        <Col md={4}>
+                                            <Card className="mb-4 mt-4">
+                                                <Card.Body>
+                                                    <Card.Title>Tổng Thu Nhập</Card.Title>
+                                                    <Card.Text>
+                                                        {totalIncome.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                                                    </Card.Text>
+                                                </Card.Body>
+                                            </Card>
+                                        </Col>
+                                        <Col md={4}>
+                                            <Card className="mb-4 mt-4">
+                                                <Card.Body>
+                                                    <Card.Title>Tổng Chi Tiêu</Card.Title>
+                                                    <Card.Text>
+                                                        {totalExpense.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                                                    </Card.Text>
+                                                </Card.Body>
+                                            </Card>
+                                        </Col>
+                                    </Row>
 
-                        </Col>
+                                    <Row>
+                                        {/* Left Chart (from Charts) */}
+                                        <Col md={6}>
+                                            <Charts totalIncome={totalIncome} totalExpense={totalExpense} barData={barData} />
+                                        </Col>
 
-                        {/* Right Chart (ExpenseChart) */}
-                        <Col md={6}>
-                            <Card className="mb-4 mt-4">
-                                <Card.Body>
-                                    <Card.Title>Số Dư Theo Thời Gian</Card.Title>
-                                    <div style={{ height: '400px' }}>
-                                        <ExpenseChart />
-                                    </div>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    </Row>
+                                        {/* Right Chart (ExpenseChart) */}
+                                        <Col md={6}>
+                                            <Card className="mb-4 mt-4">
+                                                <Card.Body>
+                                                    <Card.Title>Số Dư Theo Thời Gian</Card.Title>
+                                                    <div style={{ height: '400px' }}>
+                                                        <ExpenseChart />
+                                                    </div>
+                                                </Card.Body>
+                                            </Card>
+                                        </Col>
+                                    </Row>
 
-
-                    {/* Thêm 2 bảng giao dịch nằm kế bên nhau */}
-                    <Row>
-                        <Col md={6}>
-                            <TransactionTable />
-                        </Col>
-                        <Col md={6}>
-                            <TransactionTable2 />
-                        </Col>
-                    </Row>
+                                    {/* Two Transaction Tables side by side */}
+                                    <Row>
+                                        <Col md={6}>
+                                            <TransactionTable />
+                                        </Col>
+                                        <Col md={6}>
+                                            <TransactionTable2 />
+                                        </Col>
+                                    </Row>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </Col>
             </Row>
         </Container>

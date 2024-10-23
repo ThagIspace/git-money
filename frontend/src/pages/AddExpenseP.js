@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
-import ExpenseList from '../components/ExpenseList'; // Nhập Danh Sách Chi Phí
-import Sidebar from '../components/Sidebar'; // Nếu cần thanh bên
-import TopBar from '../components/Topbar'; // Nếu cần thanh trên
+import ExpenseList from '../components/ExpenseList';
+
 
 const AddExpenseP = () => {
     const [title, setTitle] = useState('');
@@ -25,20 +24,11 @@ const AddExpenseP = () => {
         }
     };
 
-    const toggleSidebar = () => {
-        setSidebarVisible(!isSidebarVisible);
-    };
-
     return (
         <Container fluid>
-            <TopBar onToggleSidebar={toggleSidebar} />
             <Row>
-                <Col md={3} className={`sidebar-col ${isSidebarVisible ? 'visible' : 'hidden'}`} style={{ padding: 0 }}>
-                    <Sidebar visible={isSidebarVisible} />
-                </Col>
-                <Col md={isSidebarVisible ? 9 : 12} className="main-content" style={{ transition: 'all 0.3s ease' }}>
+                <Col>
                     <Row>
-                        {/* Form thêm chi tiêu */}
                         <Col md={6}>
                             <Form className="expense-form" onSubmit={handleSubmit}>
                                 <Form.Group controlId="title">

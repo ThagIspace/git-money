@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import Sidebar from '../components/Sidebar';
-import TopBar from '../components/Topbar';
-import TransactionList from '../components/TransactionList'; // Nhập Danh Sách Giao Dịch
+import TransactionList from '../components/TransactionList';
 import axios from 'axios';
 import "../assets/style/addP.css";
 
@@ -16,11 +14,9 @@ const AddTransactionP = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Chuyển đổi amount sang số
         const transaction = {
             title,
-            amount: parseFloat(amount), // Chuyển đổi amount thành số thực
+            amount: parseFloat(amount),
             category,
             description,
             date
@@ -40,26 +36,10 @@ const AddTransactionP = () => {
         }
     };
 
-    const toggleSidebar = () => {
-        setSidebarVisible(!isSidebarVisible);
-    };
-
     return (
         <Container fluid>
-            <TopBar onToggleSidebar={toggleSidebar} />
             <Row>
-                <Col
-                    md={3}
-                    className={`sidebar-col ${isSidebarVisible ? 'visible' : 'hidden'}`}
-                    style={{ padding: 0 }}
-                >
-                    <Sidebar visible={isSidebarVisible} />
-                </Col>
-                <Col
-                    md={isSidebarVisible ? 9 : 12}
-                    className={`main-content ${isSidebarVisible ? '' : 'full'}`}
-                    style={{ transition: 'all 0.3s ease' }}
-                >
+                <Col>
                     <Row>
                         {/* Cột trái: AddTransactionP */}
                         <Col md={6}>
@@ -123,8 +103,6 @@ const AddTransactionP = () => {
                                 </div>
                             </Form>
                         </Col>
-
-                        {/* Cột phải: TransactionList */}
                         <Col md={6}>
                             <TransactionList />
                         </Col>

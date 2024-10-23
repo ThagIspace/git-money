@@ -1,3 +1,4 @@
+// IncomeContext.js
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -19,6 +20,18 @@ export const IncomeProvider = ({ children }) => {
         }
     };
 
+    // Hàm để thêm thu nhập
+    const addIncome = async (income) => {
+        try {
+            const response = await axios.post('http://localhost:5000/api/v1/add-income', income);
+            setIncomes((prev) => [...prev, response.data]); // Cập nhật danh sách thu nhập
+            fetchIncomes(); // Gọi lại hàm để lấy dữ liệu mới
+        } catch (error) {
+            console.error('Error adding income:', error);
+        }
+    };
+
+
     // Hàm để xóa thu nhập
     const deleteIncome = async (id) => {
         try {
@@ -35,7 +48,7 @@ export const IncomeProvider = ({ children }) => {
     }, []);
 
     return (
-        <IncomeContext.Provider value={{ incomes, setIncomes, deleteIncome, loading }}>
+        <IncomeContext.Provider value={{ incomes, setIncomes, addIncome, deleteIncome, loading }}>
             {children}
         </IncomeContext.Provider>
     );

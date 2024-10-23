@@ -177,3 +177,18 @@
         padding: 8px 15px;
     }
 }
+
+/* addP.css hoặc incomeList.css */
+.container {
+    padding: 20px;
+}
+
+.table {
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .table {
+        font-size: 0.9rem; /* Giảm kích thước font cho màn hình nhỏ */
+    }
+}
