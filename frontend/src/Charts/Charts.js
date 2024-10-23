@@ -17,7 +17,7 @@ const Charts = ({ totalIncome, totalExpense, barData }) => {
             <Col md={6}>
                 <Card className="mb-4 mt-4">
                     <Card.Body>
-                        <Card.Title>Income vs Expenses</Card.Title>
+                        <Card.Title>Thu Nhập so với Chi Tiêu</Card.Title>
                         <PieChart width={400} height={400}>
                             <Pie
                                 data={data}
@@ -43,7 +43,7 @@ const Charts = ({ totalIncome, totalExpense, barData }) => {
             <Col md={6}>
                 <Card className="mb-4 mt-4">
                     <Card.Body>
-                        <Card.Title>Monthly Income vs Expenses</Card.Title>
+                        <Card.Title>Thu Nhập hàng tháng so với Chi Tiêu</Card.Title>
                         <ResponsiveContainer width="100%" height={400}>
                             <BarChart data={barData}>
                                 <CartesianGrid strokeDasharray="3 3" />

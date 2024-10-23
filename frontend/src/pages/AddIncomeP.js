@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
-import IncomeList from '../components/IncomeList'; // Import TransactionList
+import IncomeList from '../components/IncomeList'; // Nhập Danh Sách Thu Nhập
 import Sidebar from '../components/Sidebar'; // Nếu cần thanh bên
 import TopBar from '../components/Topbar'; // Nếu cần thanh trên
 import "../assets/style/addP.css";
@@ -21,9 +21,9 @@ const AddIncomeP = () => {
 
         try {
             const response = await axios.post('http://localhost:5000/api/v1/add-income', income);
-            console.log('Income added:', response.data);
+            console.log('Thu nhập đã được thêm:', response.data);
         } catch (error) {
-            console.error('Error adding income:', error);
+            console.error('Lỗi khi thêm thu nhập:', error);
         }
     };
 
@@ -44,47 +44,47 @@ const AddIncomeP = () => {
                         <Col md={6}>
                             <Form className="income-form" onSubmit={handleSubmit}>
                                 <Form.Group controlId="title">
-                                    <Form.Label>Title</Form.Label>
+                                    <Form.Label>Tiêu Đề</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        placeholder="Enter title"
+                                        placeholder="Nhập tiêu đề"
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
                                     />
                                 </Form.Group>
 
                                 <Form.Group controlId="amount">
-                                    <Form.Label>Amount</Form.Label>
+                                    <Form.Label>Số Tiền</Form.Label>
                                     <Form.Control
                                         type="number"
-                                        placeholder="Enter amount"
+                                        placeholder="Nhập số tiền"
                                         value={amount}
                                         onChange={(e) => setAmount(e.target.value)}
                                     />
                                 </Form.Group>
 
                                 <Form.Group controlId="category">
-                                    <Form.Label>Category</Form.Label>
+                                    <Form.Label>Danh Mục</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        placeholder="Enter category"
+                                        placeholder="Nhập danh mục"
                                         value={category}
                                         onChange={(e) => setCategory(e.target.value)}
                                     />
                                 </Form.Group>
 
                                 <Form.Group controlId="description">
-                                    <Form.Label>Description</Form.Label>
+                                    <Form.Label>Mô Tả</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        placeholder="Enter description"
+                                        placeholder="Nhập mô tả"
                                         value={description}
                                         onChange={(e) => setDescription(e.target.value)}
                                     />
                                 </Form.Group>
 
                                 <Form.Group controlId="date">
-                                    <Form.Label>Date</Form.Label>
+                                    <Form.Label>Ngày</Form.Label>
                                     <Form.Control
                                         type="date"
                                         value={date}
@@ -94,10 +94,10 @@ const AddIncomeP = () => {
 
                                 <div className="d-flex justify-content-between">
                                     <Button variant="primary" type="submit">
-                                        Add Income
+                                        Thêm Thu Nhập
                                     </Button>
                                     <Button href="/" variant="danger">
-                                        Back
+                                        Quay Lại
                                     </Button>
                                 </div>
                             </Form>

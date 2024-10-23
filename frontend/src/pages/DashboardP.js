@@ -69,7 +69,7 @@ const DashboardP = () => {
                         <Col md={4}>
                             <Card className="mb-4 mt-4">
                                 <Card.Body>
-                                    <Card.Title>Balance</Card.Title>
+                                    <Card.Title>Số Dư</Card.Title>
                                     <Card.Text>
                                         {balance.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                                     </Card.Text>
@@ -79,7 +79,7 @@ const DashboardP = () => {
                         <Col md={4}>
                             <Card className="mb-4 mt-4">
                                 <Card.Body>
-                                    <Card.Title>Total Income</Card.Title>
+                                    <Card.Title>Tổng Thu Nhập</Card.Title>
                                     <Card.Text>
                                         {totalIncome.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                                     </Card.Text>
@@ -89,7 +89,7 @@ const DashboardP = () => {
                         <Col md={4}>
                             <Card className="mb-4 mt-4">
                                 <Card.Body>
-                                    <Card.Title>Total Expenses</Card.Title>
+                                    <Card.Title>Tổng Chi Tiêu</Card.Title>
                                     <Card.Text>
                                         {totalExpense.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                                     </Card.Text>
@@ -105,7 +105,7 @@ const DashboardP = () => {
                         <Col md={12}>
                             <Card className="mb-4 mt-4">
                                 <Card.Body>
-                                    <Card.Title>Balance Over Time</Card.Title>
+                                    <Card.Title>Số Dư Theo Thời Gian</Card.Title>
                                     <div style={{ height: '400px' }}>
                                         <BalanceChart />
                                     </div>

@@ -22,7 +22,7 @@ const Dashboard = () => {
             <Row>
                 <Col md={6}>
                     <Card>
-                        <Card.Header>Incomes</Card.Header>
+                        <Card.Header>Thu Nhập</Card.Header>
                         <Card.Body>
                             {transactions.incomes.map(income => (
                                 <p key={income._id}>{income.title} - {income.amount}</p>
@@ -32,7 +32,7 @@ const Dashboard = () => {
                 </Col>
                 <Col md={6}>
                     <Card>
-                        <Card.Header>Expenses</Card.Header>
+                        <Card.Header>Chi Phí</Card.Header>
                         <Card.Body>
                             {transactions.expenses.map(expense => (
                                 <p key={expense._id}>{expense.title} - {expense.amount}</p>

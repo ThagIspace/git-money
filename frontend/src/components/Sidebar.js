@@ -8,25 +8,25 @@ const Sidebar = ({ visible }) => {
         <Nav className={`sidebar ${visible ? 'visible' : 'hidden'}`}>
             <div className="sidebar-sticky">
                 <Nav.Item>
-                    <Link to="/" className="nav-link">Dashboard</Link>
+                    <Link to="/" className="nav-link">Bảng Điều Khiển</Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Link to="/add-expense" className="nav-link">AddExpenseP</Link>
+                    <Link to="/add-expense" className="nav-link">Thêm Chi Phí</Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Link to="/add-income" className="nav-link">AddIncomeP</Link>
+                    <Link to="/add-income" className="nav-link">Thêm Thu Nhập</Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Link to="/add-transit" className="nav-link">AddTransaction</Link>
+                    <Link to="/add-transit" className="nav-link">Thêm Giao Dịch</Link>
                 </Nav.Item>
                 {/* <Nav.Item>
-                    <Link to="/list-expense" className="nav-link">ExpenseList</Link>
+                    <Link to="/list-expense" className="nav-link">Danh Sách Chi Phí</Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Link to="/list-income" className="nav-link">IncomeList</Link>
+                    <Link to="/list-income" className="nav-link">Danh Sách Thu Nhập</Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Link to="/list-transit" className="nav-link">TransactionList</Link>
+                    <Link to="/list-transit" className="nav-link">Danh Sách Giao Dịch</Link>
                 </Nav.Item> */}
             </div>
         </Nav>
