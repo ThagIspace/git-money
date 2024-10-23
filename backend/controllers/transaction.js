@@ -8,13 +8,13 @@ exports.addTransaction = async (req, res) => {
         title,
         amount,
         category,
-        ...(description && { description }),
+        description,
         date
     });
 
     try {
         // Kiểm tra đầu vào
-        if (!title || !category || !date) {
+        if (!title || !category || !description || !date) {
             return res.status(400).json({ message: 'All fields are required!' });
         }
         if (amount <= 0 || typeof amount !== 'number') {

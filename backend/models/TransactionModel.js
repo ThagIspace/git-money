@@ -16,7 +16,7 @@ const TransactionSchema = new mongoose.Schema({
     type: {
         type: String,
         required: true,
-        enum: ['income', 'expense'],
+        enum: ['income', 'expense'], // Chỉ cho phép "income" hoặc "expense"
         default: 'expense'
     },
     date: {
@@ -31,7 +31,7 @@ const TransactionSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: false,
+        required: true,
         maxLength: 20,
         trim: true
     }

@@ -36,7 +36,7 @@ export const ExpenseChart = () => {
         labels: labels,
         datasets: [
             {
-                label: 'Chi tiêu hằng tháng',
+                label: 'Chi tiêu',
                 data: dataPoints,
                 fill: false,
                 backgroundColor: 'red',

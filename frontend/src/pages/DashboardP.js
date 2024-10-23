@@ -112,7 +112,7 @@ const DashboardP = () => {
                                         <Col md={6}>
                                             <Card className="mb-4 mt-4">
                                                 <Card.Body>
-                                                    <Card.Title>Số Dư Theo Thời Gian</Card.Title>
+                                                    <Card.Title>Chi tiêu hằng tháng</Card.Title>
                                                     <div style={{ height: '400px' }}>
                                                         <ExpenseChart />
                                                     </div>

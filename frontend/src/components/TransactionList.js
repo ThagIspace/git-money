@@ -15,24 +15,24 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const TransactionList = () => {
-    const { transactions, deleteTransaction, loading } = useContext(TransactionContext);
+    const { transactions, deleteTransaction, loading } = useContext(TransactionContext); // Lấy danh sách giao dịch từ context
 
     const handleDelete = (id) => {
         if (window.confirm('Bạn có chắc chắn muốn xóa giao dịch này không?')) {
-            deleteTransaction(id);
+            deleteTransaction(id); // Gọi hàm để xóa giao dịch
         }
     };
 
     if (loading) {
-        return <CircularProgress />;
+        return <CircularProgress />; // Hiển thị loading nếu đang tải dữ liệu
     }
 
     return (
-        <div>
+        <div className="container mt-5">
             <Typography variant="h4" gutterBottom>
                 Danh Sách Giao Dịch
             </Typography>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} className="mt-4">
                 <Table aria-label="transactions table">
                     <TableHead>
                         <TableRow>
@@ -48,7 +48,9 @@ const TransactionList = () => {
                         {transactions.map((trans) => (
                             <TableRow key={trans._id}>
                                 <TableCell>{trans.title}</TableCell>
-                                <TableCell>${trans.amount.toFixed(2)}</TableCell>
+                                <TableCell>
+                                    {trans.amount ? `${trans.amount.toLocaleString('vi-VN')} VNĐ` : 'N/A'}
+                                </TableCell>
                                 <TableCell>{trans.category}</TableCell>
                                 <TableCell>{trans.description}</TableCell>
                                 <TableCell>{new Date(trans.date).toLocaleDateString()}</TableCell>

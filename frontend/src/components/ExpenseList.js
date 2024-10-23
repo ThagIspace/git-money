@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ExpenseContext } from '../context/ExpenseContext';
+import { ExpenseContext } from '../context/ExpenseContext'; // Lấy context chi phí
 import {
     Table,
     TableBody,
@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const ViewExpenses = () => {
+const ExpenseList = () => {
     const { expenses, deleteExpense, loading } = useContext(ExpenseContext); // Lấy danh sách chi phí từ context
 
     const handleDelete = (id) => {
@@ -28,11 +28,11 @@ const ViewExpenses = () => {
     }
 
     return (
-        <div>
+        <div className="container mt-5">
             <Typography variant="h4" gutterBottom>
                 Danh Sách Chi Tiêu
             </Typography>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} className="mt-4">
                 <Table aria-label="expenses table">
                     <TableHead>
                         <TableRow>
@@ -45,22 +45,23 @@ const ViewExpenses = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {expenses.length > 0 ? ( // Kiểm tra xem có dữ liệu hay không
-                            expenses.map((expense) => (
-                                <TableRow key={expense._id}>
-                                    <TableCell>{expense.title}</TableCell>
-                                    <TableCell>${expense.amount.toFixed(2)}</TableCell>
-                                    <TableCell>{expense.category}</TableCell>
-                                    <TableCell>{expense.description}</TableCell>
-                                    <TableCell>{new Date(expense.date).toLocaleDateString()}</TableCell>
-                                    <TableCell>
-                                        <IconButton onClick={() => handleDelete(expense._id)} color="error">
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </TableCell>
-                                </TableRow>
-                            ))
-                        ) : (
+                        {expenses.map((expense) => (
+                            <TableRow key={expense._id}>
+                                <TableCell>{expense.title}</TableCell>
+                                <TableCell>
+                                    {expense.amount ? `${expense.amount.toLocaleString('vi-VN')} đ` : 'N/A'}
+                                </TableCell>
+                                <TableCell>{expense.category}</TableCell>
+                                <TableCell>{expense.description}</TableCell>
+                                <TableCell>{new Date(expense.date).toLocaleDateString()}</TableCell>
+                                <TableCell>
+                                    <IconButton onClick={() => handleDelete(expense._id)} color="error">
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                        {expenses.length === 0 && (
                             <TableRow>
                                 <TableCell colSpan={6} align="center">
                                     Không có dữ liệu
@@ -74,4 +75,4 @@ const ViewExpenses = () => {
     );
 };
 
-export default ViewExpenses;
+export default ExpenseList;

@@ -19,6 +19,17 @@ export const ExpenseProvider = ({ children }) => {
         }
     };
 
+    // Hàm để thêm chi phí
+    const addExpense = async (expense) => {
+        try {
+            const response = await axios.post('http://localhost:5000/api/v1/add-expense', expense); // Gọi API để thêm chi phí
+            setExpenses((prev) => [...prev, response.data]); // Cập nhật danh sách chi phí
+            fetchExpenses(); // Gọi lại hàm để lấy dữ liệu mới
+        } catch (error) {
+            console.error('Error adding expense:', error);
+        }
+    };
+
     // Hàm để xóa chi phí
     const deleteExpense = async (id) => {
         try {
@@ -35,7 +46,7 @@ export const ExpenseProvider = ({ children }) => {
     }, []);
 
     return (
-        <ExpenseContext.Provider value={{ expenses, setExpenses, deleteExpense, loading }}>
+        <ExpenseContext.Provider value={{ expenses, setExpenses, addExpense, deleteExpense, loading }}>
             {children}
         </ExpenseContext.Provider>
     );
