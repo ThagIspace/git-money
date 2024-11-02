@@ -15,7 +15,7 @@ const HomeP = () => {
                 <Container>
                     <Navbar.Brand href="/">
                         <img src="https://cdn.textstudio.com/output/sample/normal/8/6/7/4/budget-logo-73-14768.png" alt="Logo" className="navbar-logo white" />
-                        <span style={{ color: 'white' }}>EasyBudget</span>
+                        <span style={{ color: 'black' }}>EasyBudget</span>
                     </Navbar.Brand>
 
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />

@@ -1,30 +1,30 @@
 import React, { useContext } from 'react';
-import { IncomeContext } from '../context/IncomeContext';
 import { ExpenseContext } from '../context/ExpenseContext';
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
-import { FaBeer, FaShoppingCart, FaGasPump, FaBirthdayCake, FaUtensils } from 'react-icons/fa'; // Ví dụ các biểu tượng
+import { FaUtensils, FaShoppingCart, FaTshirt, FaMoneyBillWave, FaLaptop } from 'react-icons/fa'; // New icons
 
-const TransactionTable = () => {
-    const { expenses } = useContext(ExpenseContext); // Giả sử chỉ hiển thị các giao dịch chi tiêu
+const TransactionTable2 = () => {
+    const { expenses } = useContext(ExpenseContext);
 
+    // Mapping categories to icons
     const iconsMap = {
-        "Quán rượu": <FaBeer />,
-        "Giải trí": <FaBirthdayCake />,
         "Ăn uống": <FaUtensils />,
         "Mua sắm, Đồ ăn - Thú nuôi": <FaShoppingCart />,
-        "Xăng dầu": <FaGasPump />
+        "Giày dép, Quần áo": <FaTshirt />,
+        "Tiền từ các việc vặt": <FaMoneyBillWave />,
+        "Công nghệ": <FaLaptop />
     };
 
     return (
         <Card className="mb-4">
             <Card.Body>
-                <Card.Title>Giao dịch</Card.Title>
+                <Card.Title>Các giao dịch</Card.Title>
                 <ListGroup variant="flush">
                     {expenses.map((expense, index) => (
                         <ListGroupItem key={index} className="d-flex justify-content-between align-items-center">
                             <div className="d-flex align-items-center">
                                 <div className="icon" style={{ marginRight: '10px' }}>
-                                    {iconsMap[expense.category] || <FaShoppingCart />} {/* Hiển thị icon tương ứng */}
+                                    {iconsMap[expense.category] || <FaShoppingCart />}
                                 </div>
                                 <div>
                                     <div>{expense.category}</div>
@@ -32,8 +32,10 @@ const TransactionTable = () => {
                                 </div>
                             </div>
                             <div className="text-right">
-                                <div className="text-danger">-{expense.amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</div>
-                                <div className="text-muted">{new Date(expense.date).toLocaleDateString('vi-VN')}</div>
+                                <div className={`text-${expense.amount < 0 ? 'danger' : 'success'}`}>
+                                    {expense.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
+                                </div>
+                                <div className="text-muted">{new Date(expense.date).toLocaleDateString('en-US')}</div>
                             </div>
                         </ListGroupItem>
                     ))}
@@ -43,4 +45,4 @@ const TransactionTable = () => {
     );
 };
 
-export default TransactionTable;
+export default TransactionTable2;

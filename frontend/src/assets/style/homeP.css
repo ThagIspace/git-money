@@ -205,7 +205,6 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm đổ bóng */
 }
 .navbar {
-    background-color: #006aff32; /* Màu xanh dương */
 }
 .hero-section {
     padding-top: 80px;
@@ -232,8 +231,8 @@ body {
     z-index: 1000; /* Giá trị z-index cao để đè lên các phần tử khác */
 }
 .navbar .btn-outline-primary {
-    color: white; /* Màu chữ */
-    border-color: white; /* Màu viền */
+    color: black; /* Màu chữ */
+    border-color: blue; /* Màu viền */
 }
 /* Social icons styling */
 .social-icons a {
