@@ -4,28 +4,15 @@ import { FaBars } from 'react-icons/fa';
 import '../assets/style/topbar.css';
 
 const TopBar = ({ onToggleSidebar }) => {
-    const handleLogout = () => {
-        console.log('User logged out');
-        window.location.href = '/home';
-    };
-
     return (
-        <div className="topbar fixed-top"> {/* Đảm bảo thanh topbar cố định */}
+        <div className="topbar">
             <button
                 className="menu-icon btn btn-link"
-                onClick={onToggleSidebar}
+                onClick={onToggleSidebar} // Gọi hàm khi nhấn vào nút
             >
-                <FaBars size={24} /> {/* Biểu tượng dấu 3 gạch */}
+                <FaBars size={24} />
             </button>
-
-            <span className="topbar-title">Tổng quan</span> {/* Chữ Tổng quan nằm ở giữa */}
-
-            <button
-                className="logout-btn btn btn-danger"
-                onClick={handleLogout}
-            >
-                Đăng xuất
-            </button>
+            <span className="topbar-title">Tổng quan</span>
         </div>
     );
 };

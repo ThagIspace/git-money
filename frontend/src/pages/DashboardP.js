@@ -50,7 +50,7 @@ const DashboardP = () => {
             <Row noGutters>
                 <Col>
                     <div className="MainDiv">
-                        <div className={`d-flex ${isSidebarVisible ? '' : 'toggled'}`} id="wrapper">
+                        <div className={`d-flex ${isSidebarVisible ? 'sidebar-open' : ''}`} id="wrapper">
                             <div className="bg-light border-right" id="sidebar-wrapper">
                                 <div className="sidebar-heading">Easy Budget</div>
                                 <hr />
@@ -71,8 +71,7 @@ const DashboardP = () => {
                             </div>
 
                             <div id="page-content-wrapper">
-                                {/* Hiển thị TopBar trên desktop và Nav trên mobile */}
-                                <TopBar onToggleSidebar={toggleSidebar} className="d-none d-lg-flex" />
+                                <TopBar onToggleSidebar={toggleSidebar} />
                                 <Nav toggleSidebar={toggleSidebar} className="d-lg-none" />
 
                                 <div className="container-fluid">
@@ -123,12 +122,10 @@ const DashboardP = () => {
                                             <TransactionTable />
                                         </Col>
                                         <Col md={6}>
-
                                             <Card className="mb-4 mt-4">
                                                 <Card.Body>
                                                     <Card.Title>Chi tiêu hằng tháng</Card.Title>
-                                                    <div >
-                                                        {/* style={{ height: '400px' }} */}
+                                                    <div>
                                                         <ExpenseChart />
                                                     </div>
                                                 </Card.Body>
