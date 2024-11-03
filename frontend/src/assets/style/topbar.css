@@ -1,9 +1,11 @@
 /* topbar.css */
+
+/* Cấu hình chung cho TopBar */
 .topbar {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%; /* Mặc định chiếm toàn bộ chiều rộng */
+    width: 100%;
     height: 3rem;
     background-color: #007bff;
     color: white;
@@ -16,12 +18,13 @@
     transition: width 0.3s ease, margin-left 0.3s ease;
 }
 
-/* Giảm chiều rộng của TopBar khi sidebar mở */
+/* Khi sidebar mở, giảm chiều rộng TopBar */
 .sidebar-open .topbar {
-    width: calc(100% - 15rem); /* Bớt đi chiều rộng của sidebar */
+    width: calc(100% - 15rem);
     margin-left: 15rem;
 }
 
+/* Nút menu ở bên trái */
 .menu-icon {
     color: white;
     font-size: 1.5rem;
@@ -30,13 +33,14 @@
     cursor: pointer;
 }
 
+/* Tiêu đề ở giữa */
 .topbar-title {
     flex-grow: 1;
     font-size: 1.25rem;
-    color: white;
     font-weight: bold;
 }
 
+/* Nút đăng xuất ở bên phải */
 .logout-btn {
     color: white;
     font-size: 1rem;
@@ -45,16 +49,10 @@
     cursor: pointer;
 }
 
-/* Đối với sidebar-wrapper */
+/* Ẩn sidebar và TopBar trên màn hình nhỏ */
 @media (max-width: 767.98px) {
-    #sidebar-wrapper {
-        display: none !important; /* Ẩn sidebar trên màn hình nhỏ */
-    }
-}
-
-/* Đối với TopBar */
-@media (max-width: 767.98px) {
+    #sidebar-wrapper,
     .topbar {
-        display: none !important; /* Ẩn TopBar trên màn hình nhỏ */
+        display: none !important;
     }
 }
