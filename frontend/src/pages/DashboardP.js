@@ -113,15 +113,8 @@ const DashboardP = () => {
                                         <Col md={6}>
                                             <Ex_InChart totalIncome={totalIncome} totalExpense={totalExpense} />
                                         </Col>
-                                        <Col md={6}>
-                                            <Card className="mb-4 mt-4">
-                                                <Card.Body>
-                                                    <Card.Title>Chi tiêu hằng tháng</Card.Title>
-                                                    <div style={{ height: '400px' }}>
-                                                        <ExpenseChart />
-                                                    </div>
-                                                </Card.Body>
-                                            </Card>
+                                        <Col md={6} className='mt-4'>
+                                            <SevenDaysChart />
                                         </Col>
                                     </Row>
 
@@ -130,7 +123,16 @@ const DashboardP = () => {
                                             <TransactionTable />
                                         </Col>
                                         <Col md={6}>
-                                            <SevenDaysChart />
+
+                                            <Card className="mb-4 mt-4">
+                                                <Card.Body>
+                                                    <Card.Title>Chi tiêu hằng tháng</Card.Title>
+                                                    <div >
+                                                        {/* style={{ height: '400px' }} */}
+                                                        <ExpenseChart />
+                                                    </div>
+                                                </Card.Body>
+                                            </Card>
                                         </Col>
                                     </Row>
 
