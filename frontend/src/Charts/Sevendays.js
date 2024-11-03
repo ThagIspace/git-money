@@ -11,8 +11,12 @@ const generateDataForLast7Days = () => {
         const date = new Date();
         date.setDate(today.getDate() - i);
 
+        // Định dạng lại tên ngày
+        const dayNames = ["CN", "Th 2", "Th 3", "Th 4", "Th 5", "Th 6", "Th 7"];
+        const dayName = dayNames[date.getDay()];
+
         data.unshift({
-            day: `Th ${date.getDay() + 1}, ngày ${date.getDate()}`, // Định dạng ngày
+            day: `${dayName}, ngày ${date.getDate()}`, // Định dạng ngày với tên ngày trong tuần
             income: Math.floor(Math.random() * 1000000), // Tạo thu nhập ngẫu nhiên
             expense: Math.floor(Math.random() * 1000000), // Tạo chi tiêu ngẫu nhiên
         });

@@ -46,9 +46,9 @@ const TransactionTable2 = () => {
                             </div>
                             <div className="text-right">
                                 <div className={`text-${expense.amount < 0 ? 'danger' : 'success'}`}>
-                                    {expense.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
+                                    {expense.amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                                 </div>
-                                <div className="text-muted">{new Date(expense.date).toLocaleDateString('en-US')}</div>
+                                <div className="text-muted">{new Date(expense.date).toLocaleDateString('vi-VN')}</div>
                             </div>
                         </ListGroupItem>
                     ))}
