@@ -1,18 +1,17 @@
 // DashboardP.js
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 import { IncomeContext } from '../context/IncomeContext';
 import { ExpenseContext } from '../context/ExpenseContext';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { ExpenseChart } from '../Charts/ExpenseChart';
-import TransactionTable from '../components/TransactionTable';
-import TransactionTable2 from '../components/TransactionTable2';
-import Ex_InChart from '../Charts/Ex_InChart';
-import '../assets/style/sidebar.css';
-import Nav from '../components/Nav';
-import { useLocation } from 'react-router-dom';
+import TransactionTable from '../Charts/TransactionTable';
+import TransactionTable2 from '../Charts/TransactionTable2';
 import SevenDaysChart from '../Charts/Sevendays';
-
+import Ex_InChart from '../Charts/Ex_InChart';
+import Nav from '../components/Nav';
+import '../assets/style/sidebar.css';
+import axios from 'axios';
 
 const DashboardP = () => {
     const [isSidebarVisible, setSidebarVisible] = useState(false);
@@ -127,21 +126,21 @@ const DashboardP = () => {
                                         </Col>
                                     </Row>
 
-                                    {/* Two Transaction Tables side by side */}
                                     <Row>
                                         <Col md={6}>
                                             <TransactionTable />
                                         </Col>
                                         <Col md={6}>
-                                            <TransactionTable2 />
+                                            <SevenDaysChart />
                                         </Col>
                                     </Row>
+
                                     <Row>
                                         <Col md={6}>
                                             <SevenDaysChart />
                                         </Col>
                                         <Col md={6}>
-                                            <SevenDaysChart />
+                                            <TransactionTable2 />
                                         </Col>
                                     </Row>
                                 </div>
