@@ -28,7 +28,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
     );
 };
 
-const Charts = ({ totalIncome, totalExpense }) => {
+const Ex_InChart = ({ totalIncome, totalExpense }) => {
     // Data for the PieChart
     const data = [
         { name: 'Thu nhập', value: totalIncome },
@@ -71,4 +71,4 @@ const Charts = ({ totalIncome, totalExpense }) => {
     );
 };
 
-export default Charts;
+export default Ex_InChart;

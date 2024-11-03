@@ -24,7 +24,7 @@ const Sidebar = ({ visible, toggleSidebar }) => {
                 </Nav.Item>
                 <Nav.Item>
                     <Link to="/add-transit" className="btn btn-block nav-link">
-                        Thêm Giao Dịch
+                        Các Giao Dịch
                     </Link>
                 </Nav.Item>
             </div>

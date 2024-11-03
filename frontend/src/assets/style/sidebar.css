@@ -56,3 +56,11 @@ body {
 .logout-button .btn {
     padding: 0.5rem 1rem; /* Điều chỉnh kích thước nút */
 }
+
+.list-group-item.active {
+    font-weight: bold;
+    background-color: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid #dee2e6 !important; /* Đảm bảo viền dưới vẫn hiển thị */
+    color: #000 !important;
+}

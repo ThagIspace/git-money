@@ -7,9 +7,12 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import { ExpenseChart } from '../Charts/ExpenseChart';
 import TransactionTable from '../components/TransactionTable';
 import TransactionTable2 from '../components/TransactionTable2';
-import Charts from '../Charts/Charts';
+import Ex_InChart from '../Charts/Ex_InChart';
 import '../assets/style/sidebar.css';
 import Nav from '../components/Nav';
+import { useLocation } from 'react-router-dom';
+import SevenDaysChart from '../Charts/Sevendays';
+
 
 const DashboardP = () => {
     const [isSidebarVisible, setSidebarVisible] = useState(false);
@@ -39,15 +42,9 @@ const DashboardP = () => {
     const totalExpense = expenses.reduce((acc, expense) => acc + expense.amount, 0);
     const balance = totalIncome - totalExpense;
 
-    const barData = [
-        { name: 'Jan', income: 3000, expense: 2400 },
-        { name: 'Feb', income: 5000, expense: 1398 },
-        { name: 'Mar', income: 2000, expense: 9800 },
-        { name: 'Apr', income: 2780, expense: 3908 },
-        { name: 'May', income: 1890, expense: 4800 },
-        { name: 'Jun', income: 2390, expense: 3800 },
-        { name: 'Jul', income: 3490, expense: 4300 }
-    ];
+    const location = useLocation();
+    const currentPath = location.pathname;
+
 
     return (
         <Container fluid>
@@ -57,14 +54,23 @@ const DashboardP = () => {
                         <div className={`d-flex ${isSidebarVisible ? '' : 'toggled'}`} id="wrapper">
                             <div className="bg-light border-right" id="sidebar-wrapper">
                                 <div className="sidebar-heading">Easy Budget</div>
-                                <hr></hr>
+                                <hr />
                                 <div className="list-group list-group-flush">
-                                    <a href="/" className="list-group-item list-group-item-action bg-light">Dashboard</a>
-                                    <a href="add-income" className="list-group-item list-group-item-action bg-light">Tạo thu nhập</a>
-                                    <a href="add-expense" className="list-group-item list-group-item-action bg-light">Tạo chi tiêu</a>
-                                    <a href="/add-transit" className="list-group-item list-group-item-action bg-light">Tạo giao dịch</a>
+                                    <a href="/" className={`list-group-item list-group-item-action ${currentPath === '/' ? 'active' : ''}  `}>
+                                        Dashboard
+                                    </a>
+                                    <a href="/add-income" className={`list-group-item list-group-item-action ${currentPath === '/add-income' ? 'active' : ''} bg-light`}>
+                                        Tạo thu nhập
+                                    </a>
+                                    <a href="/add-expense" className={`list-group-item list-group-item-action ${currentPath === '/add-expense' ? 'active' : ''} bg-light`}>
+                                        Tạo chi tiêu
+                                    </a>
+                                    <a href="/add-transit" className={`list-group-item list-group-item-action ${currentPath === '/add-transit' ? 'active' : ''} bg-light`}>
+                                        Các giao dịch
+                                    </a>
                                 </div>
                             </div>
+
 
                             <div id="page-content-wrapper">
                                 <Nav toggleSidebar={toggleSidebar} />
@@ -105,7 +111,7 @@ const DashboardP = () => {
                                     <Row>
                                         {/* Left Chart (from Charts) */}
                                         <Col md={6}>
-                                            <Charts totalIncome={totalIncome} totalExpense={totalExpense} barData={barData} />
+                                            <Ex_InChart totalIncome={totalIncome} totalExpense={totalExpense} />
                                         </Col>
 
                                         {/* Right Chart (ExpenseChart) */}
@@ -128,6 +134,14 @@ const DashboardP = () => {
                                         </Col>
                                         <Col md={6}>
                                             <TransactionTable2 />
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col md={6}>
+                                            <SevenDaysChart />
+                                        </Col>
+                                        <Col md={6}>
+                                            <SevenDaysChart />
                                         </Col>
                                     </Row>
                                 </div>

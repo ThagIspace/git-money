@@ -59,7 +59,7 @@ class Nav extends React.Component {
                                 <a className="nav-link" href="/">Dashboard <span className="sr-only">(current)</span></a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="add-transit">Tạo giao dịch</a>
+                                <a className="nav-link" href="add-transit">Các giao dịch</a>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="add-expense">Tạo chi tiêu</a>

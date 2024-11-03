@@ -48,7 +48,7 @@ const AddTransactionP = () => {
                                 <a href="/" className="list-group-item list-group-item-action bg-light">Dashboard</a>
                                 <a href="add-income" className="list-group-item list-group-item-action bg-light">Tạo thu nhập</a>
                                 <a href="add-expense" className="list-group-item list-group-item-action bg-light">Tạo chi tiêu</a>
-                                <a href="/add-transit" className="list-group-item list-group-item-action bg-light">Tạo giao dịch</a>
+                                <a href="/add-transit" className="list-group-item list-group-item-action bg-light">Các giao dịch</a>
                             </div>
                         </div>
 

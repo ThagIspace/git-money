@@ -4,6 +4,7 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import IncomeList from '../components/IncomeList';
 import '../assets/style/sidebar.css'; // Nhập style cho sidebar
 import Nav from '../components/Nav';
+import { useLocation } from 'react-router-dom';
 
 const AddIncomeP = () => {
     const { addIncome } = useContext(IncomeContext);
@@ -34,6 +35,9 @@ const AddIncomeP = () => {
         );
     };
 
+    const location = useLocation();
+    const currentPath = location.pathname;
+
     return (
         <Container fluid>
             <Row>
@@ -43,10 +47,18 @@ const AddIncomeP = () => {
                             <div className="sidebar-heading">Easy Budget</div>
                             <hr />
                             <div className="list-group list-group-flush">
-                                <a href="/" className="list-group-item list-group-item-action bg-light">Dashboard</a>
-                                <a href="add-income" className="list-group-item list-group-item-action bg-light">Tạo thu nhập</a>
-                                <a href="add-expense" className="list-group-item list-group-item-action bg-light">Tạo chi tiêu</a>
-                                <a href="/add-transit" className="list-group-item list-group-item-action bg-light">Tạo giao dịch</a>
+                                <a href="/" className={`list-group-item list-group-item-action ${currentPath === '/' ? 'active' : ''} bg-light `}>
+                                    Dashboard
+                                </a>
+                                <a href="/add-income" className={`list-group-item list-group-item-action ${currentPath === '/add-income' ? 'active' : ''}`}>
+                                    Tạo thu nhập
+                                </a>
+                                <a href="/add-expense" className={`list-group-item list-group-item-action ${currentPath === '/add-expense' ? 'active' : ''} bg-light`}>
+                                    Tạo chi tiêu
+                                </a>
+                                <a href="/add-transit" className={`list-group-item list-group-item-action ${currentPath === '/add-transit' ? 'active' : ''} bg-light`}>
+                                    Các giao dịch
+                                </a>
                             </div>
                         </div>
 
