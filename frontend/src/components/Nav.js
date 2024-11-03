@@ -16,47 +16,20 @@ class Nav extends React.Component {
         }));
     };
 
-    isDesktop = () => {
-        return window.innerWidth >= 768; // Adjust based on your breakpoint
-    };
-
-    handleResize = () => {
-        // Update navbarCollapsed state if we're switching to desktop mode
-        if (this.isDesktop() && !this.state.navbarCollapsed) {
-            this.setState({ navbarCollapsed: true });
-        }
-    };
-
-    componentDidMount() {
-        window.addEventListener('resize', this.handleResize);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.handleResize);
-    }
-
     render() {
         const { navbarCollapsed } = this.state;
 
         return (
-            <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                {/* Conditionally render the Toggle Menu button based on screen size */}
-                {this.isDesktop() && (
-                    <button className="btn btn-primary" onClick={this.props.toggleSidebar}>
-                        Menu
+            <div className='fixed-top'>
+                <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom d-lg-none"> {/* Hiển thị trên mobile, ẩn trên desktop */}
+                    <button className="navbar-toggler" type="button" onClick={this.toggleNavbar} aria-controls="navbarSupportedContent" aria-expanded={!navbarCollapsed} aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
                     </button>
-                )}
 
-                <button className="navbar-toggler" type="button" onClick={this.toggleNavbar} aria-controls="navbarSupportedContent" aria-expanded={!navbarCollapsed} aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-
-                <div className={`collapse navbar-collapse ${navbarCollapsed ? '' : 'show'}`} id="navbarSupportedContent">
-                    {/* Show the navbar items only in mobile mode */}
-                    {!this.isDesktop() && (
+                    <div className={`collapse navbar-collapse ${navbarCollapsed ? '' : 'show'}`} id="navbarSupportedContent">
                         <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
                             <li className="nav-item active">
-                                <a className="nav-link" href="/">Dashboard <span className="sr-only">(current)</span></a>
+                                <a className="nav-link" href="/">Dashboard</a>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="add-transit">Các giao dịch</a>
@@ -68,14 +41,13 @@ class Nav extends React.Component {
                                 <a className="nav-link" href="add-income">Tạo thu nhập</a>
                             </li>
                         </ul>
-                    )}
-                </div>
+                    </div>
 
-                {/* Nút Đăng xuất nằm ở cuối bên phải */}
-                <div className="logout-button">
-                    <a href="home" className="btn btn-danger">Đăng xuất</a>
-                </div>
-            </nav>
+                    <div className="logout-button ml-auto">
+                        <a href="home" className="btn btn-danger">Đăng xuất</a>
+                    </div>
+                </nav>
+            </div>
         );
     }
 }

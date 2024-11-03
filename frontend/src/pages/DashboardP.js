@@ -10,6 +10,7 @@ import TransactionTable2 from '../Charts/TransactionTable2';
 import SevenDaysChart from '../Charts/Sevendays';
 import Ex_InChart from '../Charts/Ex_InChart';
 import Nav from '../components/Nav';
+import TopBar from '../components/Topbar';
 import '../assets/style/sidebar.css';
 import axios from 'axios';
 
@@ -44,10 +45,9 @@ const DashboardP = () => {
     const location = useLocation();
     const currentPath = location.pathname;
 
-
     return (
-        <Container fluid>
-            <Row>
+        <Container fluid className="p-0">
+            <Row noGutters>
                 <Col>
                     <div className="MainDiv">
                         <div className={`d-flex ${isSidebarVisible ? '' : 'toggled'}`} id="wrapper">
@@ -55,7 +55,7 @@ const DashboardP = () => {
                                 <div className="sidebar-heading">Easy Budget</div>
                                 <hr />
                                 <div className="list-group list-group-flush">
-                                    <a href="/" className={`list-group-item list-group-item-action ${currentPath === '/' ? 'active' : ''}  `}>
+                                    <a href="/" className={`list-group-item list-group-item-action ${currentPath === '/' ? 'active' : ''}`}>
                                         Dashboard
                                     </a>
                                     <a href="/add-income" className={`list-group-item list-group-item-action ${currentPath === '/add-income' ? 'active' : ''} bg-light`}>
@@ -70,9 +70,11 @@ const DashboardP = () => {
                                 </div>
                             </div>
 
-
                             <div id="page-content-wrapper">
-                                <Nav toggleSidebar={toggleSidebar} />
+                                {/* Hiển thị TopBar trên desktop và Nav trên mobile */}
+                                <TopBar onToggleSidebar={toggleSidebar} className="d-none d-lg-flex" />
+                                <Nav toggleSidebar={toggleSidebar} className="d-lg-none" />
+
                                 <div className="container-fluid">
                                     <Row>
                                         <Col md={4}>
@@ -108,12 +110,9 @@ const DashboardP = () => {
                                     </Row>
 
                                     <Row>
-                                        {/* Left Chart (from Charts) */}
                                         <Col md={6}>
                                             <Ex_InChart totalIncome={totalIncome} totalExpense={totalExpense} />
                                         </Col>
-
-                                        {/* Right Chart (ExpenseChart) */}
                                         <Col md={6}>
                                             <Card className="mb-4 mt-4">
                                                 <Card.Body>
