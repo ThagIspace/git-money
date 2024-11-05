@@ -10,7 +10,7 @@ export const ExpenseProvider = ({ children }) => {
     // Hàm để lấy danh sách chi phí từ API
     const fetchExpenses = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/v1/get-expenses'); // Đảm bảo endpoint đúng
+            const response = await axios.get('http://localhost:5000/api/v1/get-expenses');
             setExpenses(response.data);
             setLoading(false);
         } catch (error) {

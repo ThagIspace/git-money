@@ -4,11 +4,11 @@ import { useLocation } from 'react-router-dom';
 import { IncomeContext } from '../context/IncomeContext';
 import { ExpenseContext } from '../context/ExpenseContext';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import { ExpenseChart } from '../Charts/ExpenseChart';
-import TransactionTable from '../Charts/TransactionTable';
-import TransactionTable2 from '../Charts/TransactionTable2';
-import SevenDaysChart from '../Charts/Sevendays';
-import Ex_InChart from '../Charts/Ex_InChart';
+import { ExpenseChart } from '../charts/ExpenseChart';
+import TransactionTable from '../charts/TransactionTable';
+import TransactionTable2 from '../charts/TransactionTable2';
+import SevenDaysChart from '../charts/Sevendays';
+import Ex_InChart from '../charts/Ex_InChart';
 import Nav from '../components/Nav';
 import TopBar from '../components/Topbar';
 import '../assets/style/sidebar.css';
@@ -63,6 +63,9 @@ const DashboardP = () => {
                                     </a>
                                     <a href="/add-expense" className={`list-group-item list-group-item-action ${currentPath === '/add-expense' ? 'active' : ''} bg-light`}>
                                         Tạo chi tiêu
+                                    </a>
+                                    <a href="/add-budget" className={`list-group-item list-group-item-action ${currentPath === '/add-expense' ? 'active' : ''} bg-light`}>
+                                        Tạo ngân sách
                                     </a>
                                     <a href="/add-transit" className={`list-group-item list-group-item-action ${currentPath === '/add-transit' ? 'active' : ''} bg-light`}>
                                         Các giao dịch

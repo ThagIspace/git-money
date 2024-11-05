@@ -38,6 +38,9 @@ class Nav extends React.Component {
                                 <a className="nav-link" href="add-expense">Tạo chi tiêu</a>
                             </li>
                             <li className="nav-item">
+                                <a className="nav-link" href="add-budget">Tạo ngân sách</a>
+                            </li>
+                            <li className="nav-item">
                                 <a className="nav-link" href="add-income">Tạo thu nhập</a>
                             </li>
                         </ul>

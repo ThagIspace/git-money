@@ -5,6 +5,7 @@ import HomeP from './pages/HomeP.js';
 import DashboardP from './pages/DashboardP.js';
 import AddExpenseP from './pages/AddExpenseP';
 import AddIncomeP from './pages/AddIncomeP';
+import AddBudgetP from './pages/AddBudgetP.js';
 import AddTransactionP from './pages/AddTransactionP.js';
 import ErrorP from './pages/ErrorP'; // Import the ErrorP component
 
@@ -12,6 +13,7 @@ import ErrorP from './pages/ErrorP'; // Import the ErrorP component
 import ExpenseList from '../src/components/ExpenseList.js';
 import IncomeList from '../src/components/IncomeList.js';
 import TransactionList from '../src/components/TransactionList.js';
+import BudgetList from '../src/components/BudgetList.js';
 import Login from './components/Login.js';
 import Register from './components/Register.js';
 
@@ -30,6 +32,11 @@ const router = createBrowserRouter([
   {
     path: '/add-expense',
     element: <AddExpenseP />,
+    errorElement: <ErrorP />,
+  },
+  {
+    path: '/add-budget',
+    element: <AddBudgetP />,
     errorElement: <ErrorP />,
   },
   {
@@ -55,6 +62,11 @@ const router = createBrowserRouter([
   {
     path: '/list-expense',
     element: <ExpenseList />,
+    errorElement: <ErrorP />,
+  },
+  {
+    path: '/list-budget',
+    element: <BudgetList />,
     errorElement: <ErrorP />,
   },
   {
