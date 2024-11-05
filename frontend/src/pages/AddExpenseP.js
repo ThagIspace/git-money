@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { ExpenseContext } from '../context/ExpenseContext';
+import { BudgetContext } from '../context/BudgetContext';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import ExpenseList from '../components/ExpenseList';
 import '../assets/style/sidebar.css';
@@ -8,6 +9,7 @@ import { useLocation } from 'react-router-dom';
 
 const AddExpenseP = () => {
     const { addExpense } = useContext(ExpenseContext);
+    const { budgets } = useContext(BudgetContext); // Lấy danh sách ngân sách
     const [isSidebarVisible, setSidebarVisible] = useState(false);
     const [title, setTitle] = useState('');
     const [amount, setAmount] = useState('');
@@ -35,8 +37,7 @@ const AddExpenseP = () => {
         setAmount('');
         setCategory('');
         setDescription('');
-        setDate(new Date().toISOString().split('T')[0]
-        );
+        setDate(new Date().toISOString().split('T')[0]);
     };
 
     const location = useLocation();
@@ -50,13 +51,13 @@ const AddExpenseP = () => {
                             <div className="sidebar-heading">Easy Budget</div>
                             <hr />
                             <div className="list-group list-group-flush">
-                                <a href="/" className={`list-group-item list-group-item-action ${currentPath === '/' ? 'active' : ''} bg-light  `}>
+                                <a href="/" className={`list-group-item list-group-item-action ${currentPath === '/' ? 'active' : ''} bg-light`}>
                                     Dashboard
                                 </a>
                                 <a href="/add-income" className={`list-group-item list-group-item-action ${currentPath === '/add-income' ? 'active' : ''} bg-light`}>
                                     Tạo thu nhập
                                 </a>
-                                <a href="/add-expense" className={`list-group-item list-group-item-action ${currentPath === '/add-expense' ? 'active' : ''} `}>
+                                <a href="/add-expense" className={`list-group-item list-group-item-action ${currentPath === '/add-expense' ? 'active' : ''}`}>
                                     Tạo chi tiêu
                                 </a>
                                 <a href="/add-transit" className={`list-group-item list-group-item-action ${currentPath === '/add-transit' ? 'active' : ''} bg-light`}>
@@ -101,12 +102,18 @@ const AddExpenseP = () => {
                                             <Form.Group controlId="category">
                                                 <Form.Label>Danh Mục</Form.Label>
                                                 <Form.Control
-                                                    type="text"
-                                                    placeholder="Nhập danh mục"
+                                                    as="select"
                                                     value={category}
                                                     onChange={(e) => setCategory(e.target.value)}
                                                     required
-                                                />
+                                                >
+                                                    <option value="">Chọn danh mục ngân sách</option>
+                                                    {budgets.map((budget) => (
+                                                        <option key={budget._id} value={budget.name}>
+                                                            {budget.name}
+                                                        </option>
+                                                    ))}
+                                                </Form.Control>
                                             </Form.Group>
 
                                             <Form.Group controlId="description">
@@ -123,7 +130,7 @@ const AddExpenseP = () => {
                                                 <Form.Label>Ngày</Form.Label>
                                                 <Form.Control
                                                     type="date"
-                                                    className="w-50" // Thêm lớp CSS để giảm chiều rộng
+                                                    className="w-50"
                                                     value={date}
                                                     onChange={(e) => setDate(e.target.value || new Date().toISOString().split('T')[0])}
                                                     required
