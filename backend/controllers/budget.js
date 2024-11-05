@@ -3,7 +3,7 @@ const BudgetSchema = require("../models/BudgetModel");
 
 exports.addBudget = async (req, res) => {
     const { name, amount } = req.body;
-    const budget = new BudgetSchema({ name, amount, spent: 0 }); // Khởi tạo spent là 0
+    const budget = new BudgetSchema({ name, amount, spent: 0 });
 
     try {
         if (!name || amount <= 0) {
@@ -13,6 +13,25 @@ exports.addBudget = async (req, res) => {
         res.status(200).json({ message: 'Budget Added', budget });
     } catch (error) {
         res.status(500).json({ message: 'Server Error' });
+    }
+};
+
+exports.updateBudget = async (req, res) => { // Thêm hàm updateBudget
+    const { id } = req.params;
+    const { spent } = req.body;
+
+    try {
+        const budget = await BudgetSchema.findById(id);
+        if (!budget) {
+            return res.status(404).json({ message: 'Budget Not Found' });
+        }
+
+        budget.spent = spent;
+        await budget.save();
+
+        res.status(200).json({ message: 'Budget Updated', budget });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error', error });
     }
 };
 

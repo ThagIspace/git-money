@@ -13,7 +13,7 @@ const BudgetSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    spent: { // Thêm thuộc tính để lưu số tiền đã chi tiêu
+    spent: {
         type: Number,
         default: 0,
     }

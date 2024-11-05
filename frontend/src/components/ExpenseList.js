@@ -20,7 +20,7 @@ const ExpenseList = () => {
 
     const handleDelete = (id) => {
         if (window.confirm('Bạn có chắc chắn muốn xóa khoản chi tiêu này không?')) {
-            deleteExpense(id); // Gọi hàm deleteExpense để cập nhật lại ngân sách sau khi xóa
+            deleteExpense(id); // Gọi hàm deleteExpense để xóa và cập nhật lại danh sách
         }
     };
 

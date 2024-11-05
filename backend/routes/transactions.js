@@ -1,12 +1,11 @@
 // routes/transactions.js
-const { addExpense, getExpense, deleteExpense } = require('../controllers/expense');
-const { addBudget, getBudgets, deleteBudget } = require('../controllers/budget');
 const { addIncome, getIncomes, deleteIncome } = require('../controllers/income');
+const { addExpense, getExpense, deleteExpense } = require('../controllers/expense');
+const { addBudget, getBudgets, deleteBudget, updateBudget } = require('../controllers/budget');
 const { addTransaction, getTransactions, deleteTransaction } = require('../controllers/transaction');
 
 const router = require('express').Router();
 
-// Route cho income và expense (cũ)
 router.post('/add-income', addIncome)
     .get('/get-incomes', getIncomes)
     .delete('/delete-income/:id', deleteIncome)
@@ -21,6 +20,7 @@ router.post('/add-income', addIncome)
 
     .post('/add-budget', addBudget)
     .get('/get-budgets', getBudgets)
-    .delete('/delete-budget/:id', deleteBudget);
+    .delete('/delete-budget/:id', deleteBudget)
+    .put('/update-budget/:id', updateBudget);
 
 module.exports = router;

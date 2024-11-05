@@ -50,20 +50,22 @@ exports.getExpense = async (req, res) => {
 exports.deleteExpense = async (req, res) => {
     const { id } = req.params;
     try {
-        const expense = await ExpenseSchema.findById(id);
-        if (expense) {
-            // Cập nhật số tiền đã chi tiêu trong ngân sách khi xóa chi phí
-            const budget = await BudgetSchema.findOne({ name: expense.category });
-            if (budget) {
-                budget.spent -= expense.amount;
-                await budget.save();
-            }
-            await expense.remove();
-            res.status(200).json({ message: 'Expense Deleted' });
-        } else {
-            res.status(404).json({ message: 'Expense Not Found' });
+        const expense = await ExpenseSchema.findByIdAndDelete(id);
+        if (!expense) {
+            return res.status(404).json({ message: 'Expense not found' });
         }
+
+        // Cập nhật số tiền đã chi tiêu trong ngân sách
+        const budget = await BudgetSchema.findOne({ name: expense.category });
+        if (budget) {
+            budget.spent -= expense.amount;
+            await budget.save();
+        }
+
+        res.status(200).json({ message: 'Expense deleted successfully' });
     } catch (error) {
-        res.status(500).json({ message: 'Server Error' });
+        console.error('Error deleting expense:', error);
+        res.status(500).json({ message: 'Server Error', error });
     }
 };
+

@@ -34,14 +34,16 @@ export const ExpenseProvider = ({ children }) => {
 
     const deleteExpense = async (id) => {
         try {
-            const expense = expenses.find(e => e._id === id); // Tìm expense bị xóa
-            if (expense) {
-                await axios.delete(`http://localhost:5000/api/v1/delete-expense/${id}`);
-                setExpenses(prev => prev.filter(exp => exp._id !== id));
-                updateBudgetSpent(expense.category, -expense.amount); // Trừ lại số tiền chi tiêu từ ngân sách
+            const expenseToDelete = expenses.find(expense => expense._id === id);
+            if (expenseToDelete) {
+                const response = await axios.delete(`http://localhost:5000/api/v1/delete-expense/${id}`);
+                if (response.status === 200) {
+                    setExpenses(prevExpenses => prevExpenses.filter(expense => expense._id !== id));
+                    updateBudgetSpent(expenseToDelete.category, -expenseToDelete.amount);
+                }
             }
         } catch (error) {
-            console.error('Error deleting expense:', error);
+            console.error('Error deleting expense:', error.response ? error.response.data : error.message);
         }
     };
 
