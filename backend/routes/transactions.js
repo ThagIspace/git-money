@@ -1,6 +1,7 @@
 const { addExpense, getExpense, deleteExpense } = require('../controllers/expense');
 const { addIncome, getIncomes, deleteIncome } = require('../controllers/income');
 const { addTransaction, getTransactions, deleteTransaction } = require('../controllers/transaction'); // Import các chức năng từ transaction controller
+const { addBudget, getBudgets, deleteBudget } = require('../controllers/budget');
 
 const router = require('express').Router();
 
@@ -17,5 +18,9 @@ router.post('/add-income', addIncome)
 router.post('/add-transaction', addTransaction) // Thêm giao dịch mới
     .get('/get-transactions', getTransactions) // Lấy danh sách giao dịch
     .delete('/delete-transaction/:id', deleteTransaction); // Xóa giao dịch theo ID
+
+router.post('/add-budget', addBudget)
+    .get('/get-budgets', getBudgets)
+    .delete('/delete-budget/:id', deleteBudget);
 
 module.exports = router;
