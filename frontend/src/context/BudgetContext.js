@@ -23,7 +23,6 @@ export const BudgetProvider = ({ children }) => {
         try {
             const response = await axios.post('http://localhost:5000/api/v1/add-budget', budget);
             setBudgets((prev) => [...prev, response.data]);
-            fetchBudgets();
         } catch (error) {
             console.error('Error adding budget:', error);
         }
@@ -38,12 +37,25 @@ export const BudgetProvider = ({ children }) => {
         }
     };
 
+    const updateBudgetSpent = async (category, amount) => {
+        try {
+            const budget = budgets.find(b => b.name === category);
+            if (budget) {
+                const updatedBudget = { ...budget, spent: (budget.spent || 0) + amount };
+                await axios.put(`http://localhost:5000/api/v1/update-budget/${budget._id}`, updatedBudget);
+                fetchBudgets(); // Làm mới danh sách ngân sách
+            }
+        } catch (error) {
+            console.error('Error updating budget:', error);
+        }
+    };
+
     useEffect(() => {
         fetchBudgets();
     }, []);
 
     return (
-        <BudgetContext.Provider value={{ budgets, addBudget, deleteBudget, loading }}>
+        <BudgetContext.Provider value={{ budgets, addBudget, deleteBudget, updateBudgetSpent, loading }}>
             {children}
         </BudgetContext.Provider>
     );

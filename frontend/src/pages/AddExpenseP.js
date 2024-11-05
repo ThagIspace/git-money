@@ -1,3 +1,4 @@
+// components/AddExpenseP.js
 import React, { useState, useContext } from 'react';
 import { ExpenseContext } from '../context/ExpenseContext';
 import { BudgetContext } from '../context/BudgetContext';
@@ -5,12 +6,11 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import ExpenseList from '../components/ExpenseList';
 import TopBar from '../components/Topbar';
 import Nav from '../components/Nav';
-import '../assets/style/sidebar.css';
 import { useLocation } from 'react-router-dom';
 
 const AddExpenseP = () => {
     const { addExpense } = useContext(ExpenseContext);
-    const { budgets } = useContext(BudgetContext);
+    const { budgets, updateBudgetSpent } = useContext(BudgetContext);
     const [isSidebarVisible, setSidebarVisible] = useState(false);
     const [title, setTitle] = useState('');
     const [amount, setAmount] = useState('');
@@ -24,15 +24,18 @@ const AddExpenseP = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const expenseAmount = Number(amount.replace(/\./g, ''));
         const expense = {
             title,
-            amount: Number(amount.replace(/\./g, '')),
+            amount: expenseAmount,
             category,
             description: description || ' ',
             date
         };
 
         addExpense(expense);
+        updateBudgetSpent(category, expenseAmount);  // Cập nhật số tiền chi tiêu vào ngân sách
+
         setTitle('');
         setAmount('');
         setCategory('');
@@ -77,7 +80,7 @@ const AddExpenseP = () => {
                                 <Row className="justify-content-center mt-5">
                                     <Col md={6}>
                                         <h1 className="h2 text-center">Thêm Chi Phí</h1>
-                                        <Form className="expense-form" onSubmit={handleSubmit}>
+                                        <Form onSubmit={handleSubmit}>
                                             <Form.Group controlId="title">
                                                 <Form.Label>Tiêu Đề</Form.Label>
                                                 <Form.Control

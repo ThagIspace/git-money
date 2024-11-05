@@ -1,5 +1,6 @@
+// components/ExpenseList.js
 import React, { useContext } from 'react';
-import { ExpenseContext } from '../context/ExpenseContext'; // Lấy context chi phí
+import { ExpenseContext } from '../context/ExpenseContext';
 import {
     Table,
     TableBody,
@@ -15,16 +16,16 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const ExpenseList = () => {
-    const { expenses, deleteExpense, loading } = useContext(ExpenseContext); // Lấy danh sách chi phí từ context
+    const { expenses, deleteExpense, loading } = useContext(ExpenseContext);
 
     const handleDelete = (id) => {
         if (window.confirm('Bạn có chắc chắn muốn xóa khoản chi tiêu này không?')) {
-            deleteExpense(id);
+            deleteExpense(id); // Gọi hàm deleteExpense để cập nhật lại ngân sách sau khi xóa
         }
     };
 
     if (loading) {
-        return <CircularProgress />; // Hiển thị loading nếu đang tải dữ liệu
+        return <CircularProgress />;
     }
 
     return (

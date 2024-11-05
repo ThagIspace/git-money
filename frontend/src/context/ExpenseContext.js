@@ -1,13 +1,15 @@
-import React, { createContext, useState, useEffect } from 'react';
+// context/ExpenseContext.js
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { BudgetContext } from './BudgetContext';
 
 export const ExpenseContext = createContext();
 
 export const ExpenseProvider = ({ children }) => {
     const [expenses, setExpenses] = useState([]);
-    const [loading, setLoading] = useState(true); // Thêm state loading
+    const [loading, setLoading] = useState(true);
+    const { updateBudgetSpent } = useContext(BudgetContext); // Import hàm updateBudgetSpent
 
-    // Hàm để lấy danh sách chi phí từ API
     const fetchExpenses = async () => {
         try {
             const response = await axios.get('http://localhost:5000/api/v1/get-expenses');
@@ -19,28 +21,30 @@ export const ExpenseProvider = ({ children }) => {
         }
     };
 
-    // Hàm để thêm chi phí
     const addExpense = async (expense) => {
         try {
-            const response = await axios.post('http://localhost:5000/api/v1/add-expense', expense); // Gọi API để thêm chi phí
-            setExpenses((prev) => [...prev, response.data]); // Cập nhật danh sách chi phí
-            fetchExpenses(); // Gọi lại hàm để lấy dữ liệu mới
+            const response = await axios.post('http://localhost:5000/api/v1/add-expense', expense);
+            setExpenses((prev) => [...prev, response.data]);
+            updateBudgetSpent(expense.category, expense.amount); // Cập nhật ngân sách ngay khi thêm chi phí
+            fetchExpenses(); // Làm mới danh sách chi phí
         } catch (error) {
             console.error('Error adding expense:', error);
         }
     };
 
-    // Hàm để xóa chi phí
     const deleteExpense = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/api/v1/delete-expense/${id}`); // Đảm bảo endpoint đúng
-            setExpenses(prev => prev.filter(expense => expense._id !== id)); // Cập nhật state
+            const expense = expenses.find(e => e._id === id); // Tìm expense bị xóa
+            if (expense) {
+                await axios.delete(`http://localhost:5000/api/v1/delete-expense/${id}`);
+                setExpenses(prev => prev.filter(exp => exp._id !== id));
+                updateBudgetSpent(expense.category, -expense.amount); // Trừ lại số tiền chi tiêu từ ngân sách
+            }
         } catch (error) {
             console.error('Error deleting expense:', error);
         }
     };
 
-    // Gọi fetchExpenses khi Provider được khởi tạo
     useEffect(() => {
         fetchExpenses();
     }, []);
