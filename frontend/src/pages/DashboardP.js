@@ -47,7 +47,7 @@ const DashboardP = () => {
 
     return (
         <Container fluid className="p-0">
-            <Row noGutters>
+            <Row className="g-0">
                 <Col>
                     <div className="MainDiv">
                         <div className={`d-flex ${isSidebarVisible ? 'sidebar-open' : ''}`} id="wrapper">

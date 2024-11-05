@@ -12,7 +12,6 @@ export const BudgetProvider = ({ children }) => {
     const [budgets, setBudgets] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Hàm fetchBudgets để tải danh sách ngân sách từ server
     const fetchBudgets = async () => {
         try {
             const response = await axios.get('http://localhost:5000/api/v1/get-budgets');
@@ -31,7 +30,7 @@ export const BudgetProvider = ({ children }) => {
     const addBudget = async (budget) => {
         try {
             const response = await axios.post('http://localhost:5000/api/v1/add-budget', budget);
-            await fetchBudgets(); // Gọi lại fetchBudgets để cập nhật danh sách sau khi thêm
+            await fetchBudgets();
         } catch (error) {
             console.error('Error adding budget:', error);
         }
@@ -46,12 +45,26 @@ export const BudgetProvider = ({ children }) => {
         }
     };
 
+    // Thêm hàm updateBudgetSpent để cập nhật chi tiêu vào ngân sách
+    const updateBudgetSpent = async (category, amount) => {
+        try {
+            const budget = budgets.find(b => b.name === category);
+            if (budget) {
+                const updatedBudget = { ...budget, spent: (budget.spent || 0) + amount };
+                await axios.put(`http://localhost:5000/api/v1/update-budget/${budget._id}`, updatedBudget);
+                fetchBudgets(); // Cập nhật lại danh sách ngân sách sau khi cập nhật
+            }
+        } catch (error) {
+            console.error('Error updating budget:', error);
+        }
+    };
+
     useEffect(() => {
         fetchBudgets();
     }, []);
 
     return (
-        <BudgetContext.Provider value={{ budgets, addBudget, deleteBudget, fetchBudgets, loading }}>
+        <BudgetContext.Provider value={{ budgets, addBudget, deleteBudget, fetchBudgets, updateBudgetSpent, loading }}>
             {children}
         </BudgetContext.Provider>
     );
