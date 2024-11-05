@@ -4,14 +4,23 @@ import axios from 'axios';
 
 export const BudgetContext = createContext();
 
+const getRandomColor = () => {
+    return '#' + Math.floor(Math.random() * 16777215).toString(16);
+};
+
 export const BudgetProvider = ({ children }) => {
     const [budgets, setBudgets] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    // Hàm fetchBudgets để tải danh sách ngân sách từ server
     const fetchBudgets = async () => {
         try {
             const response = await axios.get('http://localhost:5000/api/v1/get-budgets');
-            setBudgets(response.data);
+            const budgetsWithColors = response.data.map(budget => ({
+                ...budget,
+                color: getRandomColor()
+            }));
+            setBudgets(budgetsWithColors);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching budgets:', error);
@@ -22,7 +31,7 @@ export const BudgetProvider = ({ children }) => {
     const addBudget = async (budget) => {
         try {
             const response = await axios.post('http://localhost:5000/api/v1/add-budget', budget);
-            setBudgets((prev) => [...prev, response.data]);
+            await fetchBudgets(); // Gọi lại fetchBudgets để cập nhật danh sách sau khi thêm
         } catch (error) {
             console.error('Error adding budget:', error);
         }
@@ -37,25 +46,12 @@ export const BudgetProvider = ({ children }) => {
         }
     };
 
-    const updateBudgetSpent = async (category, amount) => {
-        try {
-            const budget = budgets.find(b => b.name === category);
-            if (budget) {
-                const updatedBudget = { ...budget, spent: (budget.spent || 0) + amount };
-                await axios.put(`http://localhost:5000/api/v1/update-budget/${budget._id}`, updatedBudget);
-                fetchBudgets(); // Làm mới danh sách ngân sách
-            }
-        } catch (error) {
-            console.error('Error updating budget:', error);
-        }
-    };
-
     useEffect(() => {
         fetchBudgets();
     }, []);
 
     return (
-        <BudgetContext.Provider value={{ budgets, addBudget, deleteBudget, updateBudgetSpent, loading }}>
+        <BudgetContext.Provider value={{ budgets, addBudget, deleteBudget, fetchBudgets, loading }}>
             {children}
         </BudgetContext.Provider>
     );
