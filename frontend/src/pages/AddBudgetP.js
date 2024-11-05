@@ -1,10 +1,10 @@
-// components/AddBudgetP.js
 import React, { useState, useContext } from 'react';
 import { BudgetContext } from '../context/BudgetContext';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import BudgetList from '../components/BudgetList';
-import '../assets/style/sidebar.css';
+import TopBar from '../components/Topbar';
 import Nav from '../components/Nav';
+import '../assets/style/sidebar.css';
 import { useLocation } from 'react-router-dom';
 
 const AddBudgetP = () => {
@@ -36,28 +36,32 @@ const AddBudgetP = () => {
         <Container fluid>
             <Row>
                 <Col>
-                    <div className={`d-flex ${isSidebarVisible ? '' : 'toggled'}`} id="wrapper">
+                    <div className={`d-flex ${isSidebarVisible ? 'sidebar-open' : ''}`} id="wrapper">
                         <div className="bg-light border-right" id="sidebar-wrapper">
                             <div className="sidebar-heading">Easy Budget</div>
                             <hr />
                             <div className="list-group list-group-flush">
-                                <a href="/" className={`list-group-item list-group-item-action ${currentPath === '/' ? 'active' : ''} bg-light`}>
+                                <a href="/" className={`list-group-item list-group-item-action ${currentPath === '/' ? 'active' : ''}`}>
                                     Dashboard
                                 </a>
                                 <a href="/add-income" className={`list-group-item list-group-item-action ${currentPath === '/add-income' ? 'active' : ''} bg-light`}>
                                     Tạo thu nhập
                                 </a>
-                                <a href="/add-expense" className={`list-group-item list-group-item-action ${currentPath === '/add-expense' ? 'active' : ''}`}>
+                                <a href="/add-expense" className={`list-group-item list-group-item-action ${currentPath === '/add-expense' ? 'active' : ''} bg-light`}>
                                     Tạo chi tiêu
                                 </a>
                                 <a href="/add-budget" className={`list-group-item list-group-item-action ${currentPath === '/add-budget' ? 'active' : ''} bg-light`}>
                                     Tạo ngân sách
                                 </a>
+                                <a href="/add-transit" className={`list-group-item list-group-item-action ${currentPath === '/add-transit' ? 'active' : ''} bg-light`}>
+                                    Các giao dịch
+                                </a>
                             </div>
                         </div>
 
                         <div id="page-content-wrapper">
-                            <Nav toggleSidebar={toggleSidebar} />
+                            <TopBar onToggleSidebar={toggleSidebar} />
+                            <Nav toggleSidebar={toggleSidebar} className="d-lg-none" />
                             <div className="container-fluid">
                                 <Row className="justify-content-center mt-5">
                                     <Col md={6}>

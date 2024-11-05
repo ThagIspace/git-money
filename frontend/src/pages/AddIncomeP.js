@@ -2,8 +2,9 @@ import React, { useState, useContext } from 'react';
 import { IncomeContext } from '../context/IncomeContext';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import IncomeList from '../components/IncomeList';
-import '../assets/style/sidebar.css'; // Nhập style cho sidebar
+import TopBar from '../components/Topbar';
 import Nav from '../components/Nav';
+import '../assets/style/sidebar.css';
 import { useLocation } from 'react-router-dom';
 
 const AddIncomeP = () => {
@@ -12,7 +13,7 @@ const AddIncomeP = () => {
     const [title, setTitle] = useState('');
     const [amount, setAmount] = useState('');
     const [description, setDescription] = useState('');
-    const [date, setDate] = useState(new Date().toISOString().split('T')[0]); // Ngày hiện tại
+    const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
 
     const toggleSidebar = () => {
         setSidebarVisible(!isSidebarVisible);
@@ -22,17 +23,16 @@ const AddIncomeP = () => {
         e.preventDefault();
         const income = {
             title,
-            amount: Number(amount.replace(/\./g, '')), // Chuyển đổi sang số
+            amount: Number(amount.replace(/\./g, '')),
             description: description || ' ',
             date
         };
 
-        addIncome(income); // Gọi hàm để thêm thu nhập
+        addIncome(income);
         setTitle('');
         setAmount('');
         setDescription('');
-        setDate(new Date().toISOString().split('T')[0]
-        );
+        setDate(new Date().toISOString().split('T')[0]);
     };
 
     const location = useLocation();
@@ -42,19 +42,22 @@ const AddIncomeP = () => {
         <Container fluid>
             <Row>
                 <Col>
-                    <div className={`d-flex ${isSidebarVisible ? '' : 'toggled'}`} id="wrapper">
+                    <div className={`d-flex ${isSidebarVisible ? 'sidebar-open' : ''}`} id="wrapper">
                         <div className="bg-light border-right" id="sidebar-wrapper">
                             <div className="sidebar-heading">Easy Budget</div>
                             <hr />
                             <div className="list-group list-group-flush">
-                                <a href="/" className={`list-group-item list-group-item-action ${currentPath === '/' ? 'active' : ''} bg-light `}>
+                                <a href="/" className={`list-group-item list-group-item-action ${currentPath === '/' ? 'active' : ''}`}>
                                     Dashboard
                                 </a>
-                                <a href="/add-income" className={`list-group-item list-group-item-action ${currentPath === '/add-income' ? 'active' : ''}`}>
+                                <a href="/add-income" className={`list-group-item list-group-item-action ${currentPath === '/add-income' ? 'active' : ''} bg-light`}>
                                     Tạo thu nhập
                                 </a>
                                 <a href="/add-expense" className={`list-group-item list-group-item-action ${currentPath === '/add-expense' ? 'active' : ''} bg-light`}>
                                     Tạo chi tiêu
+                                </a>
+                                <a href="/add-budget" className={`list-group-item list-group-item-action ${currentPath === '/add-budget' ? 'active' : ''} bg-light`}>
+                                    Tạo ngân sách
                                 </a>
                                 <a href="/add-transit" className={`list-group-item list-group-item-action ${currentPath === '/add-transit' ? 'active' : ''} bg-light`}>
                                     Các giao dịch
@@ -63,7 +66,8 @@ const AddIncomeP = () => {
                         </div>
 
                         <div id="page-content-wrapper">
-                            <Nav toggleSidebar={toggleSidebar} />
+                            <TopBar onToggleSidebar={toggleSidebar} />
+                            <Nav toggleSidebar={toggleSidebar} className="d-lg-none" />
                             <div className="container-fluid">
                                 <Row className="justify-content-center mt-5">
                                     <Col md={6}>
@@ -109,20 +113,17 @@ const AddIncomeP = () => {
                                                 <Form.Label>Ngày</Form.Label>
                                                 <Form.Control
                                                     type="date"
-                                                    className="w-50" // Thêm lớp CSS để giảm chiều rộng
+                                                    className="w-50"
                                                     value={date}
                                                     onChange={(e) => setDate(e.target.value || new Date().toISOString().split('T')[0])}
                                                     required
                                                 />
                                             </Form.Group>
-
-
-                                            <div className="d-flex justify-content-center mt-4">
+                                            <div className=" d-flex justify-content-center mt-4">
                                                 <Button variant="primary" type="submit">
                                                     Thêm Thu Nhập
                                                 </Button>
                                             </div>
-
                                         </Form>
                                     </Col>
                                 </Row>
@@ -136,8 +137,9 @@ const AddIncomeP = () => {
                     </div>
                 </Col>
             </Row>
-        </Container>
+        </Container >
     );
 };
 
 export default AddIncomeP;
+

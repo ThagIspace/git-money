@@ -3,19 +3,20 @@ import { ExpenseContext } from '../context/ExpenseContext';
 import { BudgetContext } from '../context/BudgetContext';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import ExpenseList from '../components/ExpenseList';
-import '../assets/style/sidebar.css';
+import TopBar from '../components/Topbar';
 import Nav from '../components/Nav';
+import '../assets/style/sidebar.css';
 import { useLocation } from 'react-router-dom';
 
 const AddExpenseP = () => {
     const { addExpense } = useContext(ExpenseContext);
-    const { budgets } = useContext(BudgetContext); // Lấy danh sách ngân sách
+    const { budgets } = useContext(BudgetContext);
     const [isSidebarVisible, setSidebarVisible] = useState(false);
     const [title, setTitle] = useState('');
     const [amount, setAmount] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
-    const [date, setDate] = useState(new Date().toISOString().split('T')[0]); // Ngày hiện tại
+    const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
 
     const toggleSidebar = () => {
         setSidebarVisible(!isSidebarVisible);
@@ -25,13 +26,12 @@ const AddExpenseP = () => {
         e.preventDefault();
         const expense = {
             title,
-            amount: Number(amount.replace(/\./g, '')), // Chuyển đổi sang số
+            amount: Number(amount.replace(/\./g, '')),
             category,
-            description: description || ' ', // Nếu không nhập thì gán thành chuỗi rỗng
+            description: description || ' ',
             date
         };
 
-        // Reset các trường
         addExpense(expense);
         setTitle('');
         setAmount('');
@@ -42,32 +42,37 @@ const AddExpenseP = () => {
 
     const location = useLocation();
     const currentPath = location.pathname;
+
     return (
         <Container fluid>
             <Row>
                 <Col>
-                    <div className={`d-flex ${isSidebarVisible ? '' : 'toggled'}`} id="wrapper">
+                    <div className={`d-flex ${isSidebarVisible ? 'sidebar-open' : ''}`} id="wrapper">
                         <div className="bg-light border-right" id="sidebar-wrapper">
                             <div className="sidebar-heading">Easy Budget</div>
                             <hr />
                             <div className="list-group list-group-flush">
-                                <a href="/" className={`list-group-item list-group-item-action ${currentPath === '/' ? 'active' : ''} bg-light`}>
+                                <a href="/" className={`list-group-item list-group-item-action ${currentPath === '/' ? 'active' : ''}`}>
                                     Dashboard
                                 </a>
-                                <a href="/add-income" className={`list-group-item list-group-item-action ${currentPath === '/add-income' ? 'active' : ''} bg-light`}>
+                                <a href="/add-income" className={`list-group-item list-group-item-action ${currentPath === '/add-income' ? 'active' : ''}`}>
                                     Tạo thu nhập
                                 </a>
                                 <a href="/add-expense" className={`list-group-item list-group-item-action ${currentPath === '/add-expense' ? 'active' : ''}`}>
                                     Tạo chi tiêu
                                 </a>
-                                <a href="/add-transit" className={`list-group-item list-group-item-action ${currentPath === '/add-transit' ? 'active' : ''} bg-light`}>
+                                <a href="/add-budget" className={`list-group-item list-group-item-action ${currentPath === '/add-budget' ? 'active' : ''}`}>
+                                    Tạo ngân sách
+                                </a>
+                                <a href="/add-transit" className={`list-group-item list-group-item-action ${currentPath === '/add-transit' ? 'active' : ''}`}>
                                     Các giao dịch
                                 </a>
                             </div>
                         </div>
 
                         <div id="page-content-wrapper">
-                            <Nav toggleSidebar={toggleSidebar} />
+                            <TopBar onToggleSidebar={toggleSidebar} />
+                            <Nav toggleSidebar={toggleSidebar} className="d-lg-none" />
                             <div className="container-fluid">
                                 <Row className="justify-content-center mt-5">
                                     <Col md={6}>
