@@ -201,4 +201,14 @@
     .detail-data {
         font-size: 1rem;
     }
+
+    .detail-data div {
+        margin-bottom: 5px;
+    }
+
+    .net-amount-container {
+        margin-top: 5px;
+        font-size: 1rem;
+        text-align: left;
+    }
 }
