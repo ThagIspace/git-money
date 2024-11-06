@@ -1,26 +1,28 @@
 /* calendar.css */
+
+/* Container cho lịch */
 .calendar-container {
     max-width: 80%;
     margin: 0 auto;
     padding: 10px;
 }
 
-/* Tăng kích thước bảng lịch */
+/* Bảng lịch */
 .calendar-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 1rem;
-    background-color: #f9f9f9; /* Màu nền cho bảng */
+    background-color: #f9f9f9;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Tạo bóng nhẹ */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .calendar-table th,
 .calendar-table td {
-    padding: 12px 15px; /* Tăng padding để làm cho bảng rộng rãi hơn */
+    padding: 12px 15px;
     text-align: center;
-    border-bottom: 1px solid #ccc; /* Chỉ giữ lại đường ngang */
+    border-bottom: 1px solid #ccc;
 }
 
 .calendar-table th {
@@ -29,13 +31,13 @@
 }
 
 .calendar-table tr:last-child td {
-    border-bottom: none; /* Bỏ đường gạch ngang cho hàng cuối */
+    border-bottom: none;
 }
 
-/* Tăng kích thước cho các ô ngày */
+/* Ô ngày */
 .day {
     position: relative;
-    height: 100px; /* Đặt chiều cao cố định cho các ô ngày */
+    height: 100px;
     background-color: #fff;
 }
 
@@ -65,10 +67,12 @@
     right: 35px;
 }
 
+/* Các ô không thuộc tháng hiện tại */
 .other-month {
-    color: #ccc !important; /* Màu xám cho ngày của tháng khác */
+    color: #ccc !important;
 }
 
+/* Hiển thị số tiền */
 .day-amount {
     font-size: 16px;
     font-weight: 600;
@@ -82,8 +86,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 200px; /* Khoảng cách giữa các phần tử */
-    max-width: fit-content; /* Căn chỉnh theo nội dung */
+    gap: 200px;
+    max-width: fit-content;
     padding: 5px 10px;
 }
 
@@ -134,10 +138,6 @@
         font-size: 0.75rem;
     }
 
-    .calendar-header h4 {
-        font-size: 1rem;
-    }
-
     .day-amount {
         font-size: 10px;
         font-weight: 600;
@@ -145,21 +145,15 @@
 
     .income-dot,
     .expense-dot {
-        position: absolute;
         width: 5px;
         height: 5px;
-        border-radius: 50%;
     }
 
     .income-dot {
-        background-color: green;
-        top: 5px;
         left: 5px;
     }
 
     .expense-dot {
-        background-color: red;
-        top: 5px;
         right: 5px;
     }
 }
