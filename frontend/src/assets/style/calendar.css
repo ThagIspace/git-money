@@ -1,70 +1,53 @@
+/* calendar.css */
 .calendar-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 75%;
+    max-width: 80%;
     margin: 0 auto;
-    margin-top: 50px;
-}
-
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 1px;
-    width: 100%;
-}
-
-.calendar-header {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    width: 100%;
-    text-align: center;
-    font-weight: bold;
-    border: 2px solid #ddd;
-}
-
-.calendar-header-day {
     padding: 10px;
 }
 
-.calendar-day {
-    border: 1px solid #ddd;
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+/* Tăng kích thước bảng lịch */
+.calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+    background-color: #f9f9f9; /* Màu nền cho bảng */
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Tạo bóng nhẹ */
+}
+
+.calendar-table th,
+.calendar-table td {
+    padding: 12px 15px; /* Tăng padding để làm cho bảng rộng rãi hơn */
+    text-align: center;
+    border-bottom: 1px solid #ccc; /* Chỉ giữ lại đường ngang */
+}
+
+.calendar-table th {
+    background-color: #f3f3f3;
+    font-weight: bold;
+}
+
+.calendar-table tr:last-child td {
+    border-bottom: none; /* Bỏ đường gạch ngang cho hàng cuối */
+}
+
+/* Tăng kích thước cho các ô ngày */
+.day {
+    position: relative;
+    height: 100px; /* Đặt chiều cao cố định cho các ô ngày */
     background-color: #fff;
 }
 
-.calendar-day.other-month {
-    color: #ccc;
-    background-color: #f9f9f9;
+.day:not(.other-month):hover {
+    background-color: #ccc;
+    cursor: pointer;
 }
 
-.day-cell {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
-    position: relative;
-}
-
-.day-number {
-    font-size: 1.2em;
-}
-
-.dot-container {
+/* Dot hiển thị cho income và expense */
+.income-dot,
+.expense-dot {
     position: absolute;
-    top: 5px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 10px;
-}
-
-.dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
@@ -72,59 +55,111 @@
 
 .income-dot {
     background-color: green;
+    top: 5px;
+    left: 35px;
 }
 
 .expense-dot {
     background-color: red;
+    top: 5px;
+    right: 35px;
 }
 
-.balance {
-    margin-top: 5px;
-    font-size: 0.9em;
+.other-month {
+    color: #ccc !important; /* Màu xám cho ngày của tháng khác */
 }
 
-.calendar-navigation {
+.day-amount {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Header của lịch */
+.calendar-header {
+    background-color: bisque;
+    border-radius: 10px;
+    margin: 0 auto 10px auto;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    width: 100%;
-    max-width: 650px;
-    margin-bottom: 15px;
-    padding: 10px;
-    background-color: #ffe6e6;
-    border-radius: 20px;
+    justify-content: center;
+    gap: 200px; /* Khoảng cách giữa các phần tử */
+    max-width: fit-content; /* Căn chỉnh theo nội dung */
+    padding: 5px 10px;
 }
 
-.calendar-navigation button {
-    background: none;
+.calendar-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+    padding: 0 5px;
+}
+
+/* Nút điều hướng */
+.navigation-button {
     border: none;
-    font-size: 1.5em;
-    font-weight: bolder;
+    background: transparent;
+    padding: 6px 12px;
+    font-size: 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.calendar-days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 0px;
+.navigation-button:hover {
+    background-color: #e2e6ea;
 }
 
+/* Responsive cho màn hình nhỏ */
 @media (max-width: 768px) {
-    .calendar-day {
-        height: 80px;
-    }
-
     .calendar-container {
-        max-width: 800px;
-    }
-}
-
-@media (max-width: 576px) {
-    .calendar-day {
-        height: 60px;
+        max-width: 100%;
     }
 
-    .calendar-header-day,
-    .calendar-day {
-        font-size: 0.75em;
+    .calendar-header {
+        gap: 10px;
+    }
+
+    .calendar-title {
+        font-size: 1rem;
+    }
+
+    .navigation-button {
+        padding: 4px 8px;
+        font-size: 1rem;
+    }
+
+    .calendar-table th,
+    .calendar-table td {
+        padding: 4px;
+        font-size: 0.75rem;
+    }
+
+    .calendar-header h4 {
+        font-size: 1rem;
+    }
+
+    .day-amount {
+        font-size: 10px;
+        font-weight: 600;
+    }
+
+    .income-dot,
+    .expense-dot {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+    }
+
+    .income-dot {
+        background-color: green;
+        top: 5px;
+        left: 5px;
+    }
+
+    .expense-dot {
+        background-color: red;
+        top: 5px;
+        right: 5px;
     }
 }
