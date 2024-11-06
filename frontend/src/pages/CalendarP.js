@@ -1,7 +1,7 @@
-// CalendarP.js
 import React, { useState, useContext, useEffect } from 'react';
 import { ExpenseContext } from '../context/ExpenseContext';
 import { IncomeContext } from '../context/IncomeContext';
+import CalendarList from '../components/CalendarList'; // Import component mới
 import '../assets/style/calendar.css';
 
 const CalendarP = () => {
@@ -10,9 +10,10 @@ const CalendarP = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [formattedExpenses, setFormattedExpenses] = useState([]);
     const [formattedIncomes, setFormattedIncomes] = useState([]);
+    const [selectedDay, setSelectedDay] = useState(null);
+    const [detailVisible, setDetailVisible] = useState(false);
 
     useEffect(() => {
-        // Chuyển đổi dữ liệu expenses và incomes sang dạng dễ so sánh hơn
         const formatDate = (dateStr) => new Date(dateStr).toISOString().split('T')[0];
         setFormattedExpenses(expenses.map(exp => ({ ...exp, date: formatDate(exp.date) })));
         setFormattedIncomes(incomes.map(inc => ({ ...inc, date: formatDate(inc.date) })));
@@ -66,8 +67,26 @@ const CalendarP = () => {
         const hasIncome = formattedIncomes.some(inc => inc.date === formattedDate);
         const netAmount = calculateNetAmount(date);
 
+        // Xử lý click vào ngày hiện tại
+        const handleDayClick = () => {
+            if (date.getMonth() === currentDate.getMonth()) {
+                const dailyExpenses = formattedExpenses.filter(exp => exp.date === formattedDate);
+                const dailyIncome = formattedIncomes.filter(inc => inc.date === formattedDate);
+                setSelectedDay({
+                    date: formattedDate,
+                    expenses: dailyExpenses,
+                    incomes: dailyIncome
+                });
+                setDetailVisible(true);
+            }
+        };
+
         return (
-            <td key={formattedDate} className={`day ${date.getMonth() !== currentDate.getMonth() ? 'other-month' : ''}`}>
+            <td
+                key={formattedDate}
+                className={`day ${date.getMonth() !== currentDate.getMonth() ? 'other-month' : ''}`}
+                onClick={handleDayClick}
+            >
                 <div>{date.getDate()}</div>
                 {hasIncome && <div className="income-dot"></div>}
                 {hasExpense && <div className="expense-dot"></div>}
@@ -82,7 +101,6 @@ const CalendarP = () => {
                     </div>
                 )}
             </td>
-
         );
     };
 
@@ -120,6 +138,9 @@ const CalendarP = () => {
                     </tbody>
                 </table>
             </div>
+
+            {/* Sử dụng CalendarList để hiển thị bảng chi tiết */}
+            {detailVisible && <CalendarList selectedDay={selectedDay} />}
         </div>
     );
 };

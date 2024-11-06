@@ -113,6 +113,43 @@
     background-color: #e2e6ea;
 }
 
+/* Bảng ở dưới lịch */
+.detail-panel {
+    margin: 0 auto;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    margin-top: 20px;
+    max-width: 600px; /* Giới hạn chiều rộng */
+    width: 100%; /* Đảm bảo nó không vượt quá kích thước cho phép */
+}
+
+.detail-date {
+    flex: 2;
+}
+
+.detail-data {
+    flex: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Khoảng cách giữa các mục dữ liệu */
+}
+
+.detail-data div {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Khoảng cách giữa dot và text */
+}
+
+.income-dot,
+.expense-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
 /* Responsive cho màn hình nhỏ */
 @media (max-width: 768px) {
     .calendar-container {
@@ -155,5 +192,13 @@
 
     .expense-dot {
         right: 5px;
+    }
+
+    .detail-date h5 {
+        font-size: 1rem;
+    }
+
+    .detail-data {
+        font-size: 1rem;
     }
 }
