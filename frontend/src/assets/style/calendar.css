@@ -1,0 +1,130 @@
+.calendar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 75%;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    width: 100%;
+}
+
+.calendar-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    border: 2px solid #ddd;
+}
+
+.calendar-header-day {
+    padding: 10px;
+}
+
+.calendar-day {
+    border: 1px solid #ddd;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+}
+
+.calendar-day.other-month {
+    color: #ccc;
+    background-color: #f9f9f9;
+}
+
+.day-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    position: relative;
+}
+
+.day-number {
+    font-size: 1.2em;
+}
+
+.dot-container {
+    position: absolute;
+    top: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.income-dot {
+    background-color: green;
+}
+
+.expense-dot {
+    background-color: red;
+}
+
+.balance {
+    margin-top: 5px;
+    font-size: 0.9em;
+}
+
+.calendar-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 650px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #ffe6e6;
+    border-radius: 20px;
+}
+
+.calendar-navigation button {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    font-weight: bolder;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0px;
+}
+
+@media (max-width: 768px) {
+    .calendar-day {
+        height: 80px;
+    }
+
+    .calendar-container {
+        max-width: 800px;
+    }
+}
+
+@media (max-width: 576px) {
+    .calendar-day {
+        height: 60px;
+    }
+
+    .calendar-header-day,
+    .calendar-day {
+        font-size: 0.75em;
+    }
+}

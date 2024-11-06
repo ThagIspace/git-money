@@ -66,6 +66,9 @@ const AddExpenseP = () => {
                         <a href="/add-transit" className={`list-group-item list-group-item-action ${currentPath === '/add-transit' ? 'active' : ''} bg-light`}>
                             Các giao dịch
                         </a>
+                        <a href="/calendar" className={`list-group-item list-group-item-action ${currentPath === '/add-transit' ? 'active' : ''} bg-light`}>
+                            Lịch
+                        </a>
                     </div>
                 </div>
 

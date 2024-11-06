@@ -2,6 +2,7 @@ import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 // Pages
 import HomeP from './pages/HomeP.js';
+import CalendarP from './pages/CalendarP.js';
 import DashboardP from './pages/DashboardP.js';
 import AddExpenseP from './pages/AddExpenseP';
 import AddIncomeP from './pages/AddIncomeP';
@@ -27,6 +28,11 @@ const router = createBrowserRouter([
   {
     path: '/home',
     element: <HomeP />,
+    errorElement: <ErrorP />,
+  },
+  {
+    path: '/calendar',
+    element: <CalendarP />,
     errorElement: <ErrorP />,
   },
   {
