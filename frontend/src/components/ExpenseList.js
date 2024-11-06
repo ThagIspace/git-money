@@ -14,14 +14,30 @@ import {
     CircularProgress,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Swal from 'sweetalert2';
 
 const ExpenseList = () => {
     const { expenses, deleteExpense, loading } = useContext(ExpenseContext);
 
     const handleDelete = (id) => {
-        if (window.confirm('Bạn có chắc chắn muốn xóa khoản chi tiêu này không?')) {
-            deleteExpense(id); // Gọi hàm deleteExpense để xóa và cập nhật lại danh sách
-        }
+        Swal.fire({
+            title: 'Bạn có chắc chắn muốn xóa khoản chi tiêu này không?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Xóa',
+            cancelButtonText: 'Hủy',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteExpense(id);
+                Swal.fire(
+                    'Đã xóa!',
+                    'Khoản chi tiêu đã được xóa thành công.',
+                    'success'
+                );
+            }
+        });
     };
 
     if (loading) {

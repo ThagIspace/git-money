@@ -2,18 +2,34 @@
 import React, { useContext, useEffect } from 'react';
 import { BudgetContext } from '../context/BudgetContext';
 import { Card, Button, ProgressBar, Row, Col } from 'react-bootstrap';
+import Swal from 'sweetalert2';
 
 const BudgetList = () => {
     const { budgets, deleteBudget, loading, fetchBudgets } = useContext(BudgetContext);
 
     useEffect(() => {
-        fetchBudgets(); // Gọi fetchBudgets khi component render lần đầu
+        fetchBudgets();
     }, []);
 
     const handleDelete = (id) => {
-        if (window.confirm('Bạn có chắc chắn muốn xóa ngân sách này không?')) {
-            deleteBudget(id);
-        }
+        Swal.fire({
+            title: 'Bạn có chắc chắn muốn xóa ngân sách này không?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Xóa',
+            cancelButtonText: 'Hủy',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteBudget(id);
+                Swal.fire(
+                    'Đã xóa!',
+                    'Ngân sách đã được xóa thành công.',
+                    'success'
+                );
+            }
+        });
     };
 
     if (loading) {

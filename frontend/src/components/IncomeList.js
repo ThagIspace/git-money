@@ -1,3 +1,4 @@
+// components/IncomeList.js
 import React, { useContext } from 'react';
 import { IncomeContext } from '../context/IncomeContext';
 import {
@@ -13,14 +14,30 @@ import {
     CircularProgress,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Swal from 'sweetalert2';
 
 const IncomeList = () => {
     const { incomes, deleteIncome, loading } = useContext(IncomeContext);
 
     const handleDelete = (id) => {
-        if (window.confirm('Bạn có chắc chắn muốn xóa khoản thu nhập này không?')) {
-            deleteIncome(id);
-        }
+        Swal.fire({
+            title: 'Bạn có chắc chắn muốn xóa khoản thu nhập này không?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Xóa',
+            cancelButtonText: 'Hủy',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteIncome(id);
+                Swal.fire(
+                    'Đã xóa!',
+                    'Khoản thu nhập đã được xóa thành công.',
+                    'success'
+                );
+            }
+        });
     };
 
     if (loading) {
@@ -67,7 +84,6 @@ const IncomeList = () => {
                             </TableRow>
                         )}
                     </TableBody>
-
                 </Table>
             </TableContainer>
         </div>
