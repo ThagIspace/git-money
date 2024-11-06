@@ -6,11 +6,11 @@ import { ExpenseContext } from '../context/ExpenseContext';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { ExpenseChart } from '../charts/ExpenseChart';
 import TransactionTable from '../charts/TransactionTable';
-import TransactionTable2 from '../charts/TransactionTable2';
 import SevenDaysChart from '../charts/Sevendays';
 import Ex_InChart from '../charts/Ex_InChart';
 import Nav from '../components/Nav';
 import TopBar from '../components/Topbar';
+import Sidebar from '../components/Sidebar'; // Import Sidebar
 import '../assets/style/sidebar.css';
 import axios from 'axios';
 
@@ -19,141 +19,88 @@ const DashboardP = () => {
     const { incomes, setIncomes } = useContext(IncomeContext);
     const { expenses, setExpenses } = useContext(ExpenseContext);
 
-    const toggleSidebar = () => {
-        setSidebarVisible(!isSidebarVisible);
-    };
-
     useEffect(() => {
-        const fetchIncomes = async () => {
-            const response = await axios.get('http://localhost:5000/api/v1/get-incomes');
-            setIncomes(response.data);
+        const fetchData = async () => {
+            try {
+                const [incomeResponse, expenseResponse] = await Promise.all([
+                    axios.get('http://localhost:5000/api/v1/get-incomes'),
+                    axios.get('http://localhost:5000/api/v1/get-expenses')
+                ]);
+                setIncomes(incomeResponse.data);
+                setExpenses(expenseResponse.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
         };
 
-        const fetchExpenses = async () => {
-            const response = await axios.get('http://localhost:5000/api/v1/get-expenses');
-            setExpenses(response.data);
-        };
-
-        fetchIncomes();
-        fetchExpenses();
+        fetchData();
     }, [setIncomes, setExpenses]);
 
     const totalIncome = incomes.reduce((acc, income) => acc + income.amount, 0);
     const totalExpense = expenses.reduce((acc, expense) => acc + expense.amount, 0);
     const balance = totalIncome - totalExpense;
 
-    const location = useLocation();
-    const currentPath = location.pathname;
+    const toggleSidebar = () => setSidebarVisible(!isSidebarVisible);
 
     return (
-        <Container fluid className="p-0">
-            <Row className="g-0">
-                <Col>
-                    <div className="MainDiv">
-                        <div className={`d-flex ${isSidebarVisible ? 'sidebar-open' : ''}`} id="wrapper">
-                            <div className="bg-light border-right" id="sidebar-wrapper">
-                                <div className="sidebar-heading">Easy Budget</div>
-                                <hr />
-                                <div className="list-group list-group-flush">
-                                    <a href="/" className={`list-group-item list-group-item-action ${currentPath === '/' ? 'active' : ''}`}>
-                                        Dashboard
-                                    </a>
-                                    <a href="/add-income" className={`list-group-item list-group-item-action ${currentPath === '/add-income' ? 'active' : ''} bg-light`}>
-                                        Tạo thu nhập
-                                    </a>
-                                    <a href="/add-expense" className={`list-group-item list-group-item-action ${currentPath === '/add-expense' ? 'active' : ''} bg-light`}>
-                                        Tạo chi tiêu
-                                    </a>
-                                    <a href="/add-budget" className={`list-group-item list-group-item-action ${currentPath === '/add-expense' ? 'active' : ''} bg-light`}>
-                                        Tạo ngân sách
-                                    </a>
-                                    <a href="/add-transit" className={`list-group-item list-group-item-action ${currentPath === '/add-transit' ? 'active' : ''} bg-light`}>
-                                        Các giao dịch
-                                    </a>
-                                    <a href="/calendar" className={`list-group-item list-group-item-action ${currentPath === '/add-transit' ? 'active' : ''} bg-light`}>
-                                        Lịch
-                                    </a>
-                                </div>
-                            </div>
+        <div className="mt-4">
+            <div className={`d-flex ${isSidebarVisible ? 'sidebar-open' : ''}`} id="wrapper">
+                <Sidebar />
+                <div id="page-content-wrapper">
+                    <TopBar onToggleSidebar={toggleSidebar} />
+                    <Nav toggleSidebar={toggleSidebar} className="d-lg-none" />
 
-                            <div id="page-content-wrapper">
-                                <TopBar onToggleSidebar={toggleSidebar} />
-                                <Nav toggleSidebar={toggleSidebar} className="d-lg-none" />
+                    <div className="container-fluid">
+                        <Row>
+                            {[{ title: 'Số Dư', value: balance }, { title: 'Tổng Thu Nhập', value: totalIncome }, { title: 'Tổng Chi Tiêu', value: totalExpense }].map((item, index) => (
+                                <Col key={index} md={4}>
+                                    <Card className="mb-4 mt-4">
+                                        <Card.Body>
+                                            <Card.Title>{item.title}</Card.Title>
+                                            <Card.Text>
+                                                {item.value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                                            </Card.Text>
+                                        </Card.Body>
+                                    </Card>
+                                </Col>
+                            ))}
+                        </Row>
 
-                                <div className="container-fluid">
-                                    <Row>
-                                        <Col md={4}>
-                                            <Card className="mb-4 mt-4">
-                                                <Card.Body>
-                                                    <Card.Title>Số Dư</Card.Title>
-                                                    <Card.Text>
-                                                        {balance.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
-                                                    </Card.Text>
-                                                </Card.Body>
-                                            </Card>
-                                        </Col>
-                                        <Col md={4}>
-                                            <Card className="mb-4 mt-4">
-                                                <Card.Body>
-                                                    <Card.Title>Tổng Thu Nhập</Card.Title>
-                                                    <Card.Text>
-                                                        {totalIncome.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
-                                                    </Card.Text>
-                                                </Card.Body>
-                                            </Card>
-                                        </Col>
-                                        <Col md={4}>
-                                            <Card className="mb-4 mt-4">
-                                                <Card.Body>
-                                                    <Card.Title>Tổng Chi Tiêu</Card.Title>
-                                                    <Card.Text>
-                                                        {totalExpense.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
-                                                    </Card.Text>
-                                                </Card.Body>
-                                            </Card>
-                                        </Col>
-                                    </Row>
+                        <Row>
+                            <Col md={6}>
+                                <Ex_InChart totalIncome={totalIncome} totalExpense={totalExpense} />
+                            </Col>
+                            <Col md={6}>
+                                <SevenDaysChart />
+                            </Col>
+                        </Row>
 
-                                    <Row>
-                                        <Col md={6}>
-                                            <Ex_InChart totalIncome={totalIncome} totalExpense={totalExpense} />
-                                        </Col>
-                                        <Col md={6} className='mt-4'>
-                                            <SevenDaysChart />
-                                        </Col>
-                                    </Row>
+                        <Row>
+                            <Col md={6}>
+                                <TransactionTable />
+                            </Col>
+                            <Col md={6}>
+                                <Card className="mb-4 mt-4">
+                                    <Card.Body>
+                                        <Card.Title>Chi tiêu hằng tháng</Card.Title>
+                                        <ExpenseChart />
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        </Row>
 
-                                    <Row>
-                                        <Col md={6}>
-                                            <TransactionTable />
-                                        </Col>
-                                        <Col md={6}>
-                                            <Card className="mb-4 mt-4">
-                                                <Card.Body>
-                                                    <Card.Title>Chi tiêu hằng tháng</Card.Title>
-                                                    <div>
-                                                        <ExpenseChart />
-                                                    </div>
-                                                </Card.Body>
-                                            </Card>
-                                        </Col>
-                                    </Row>
-
-                                    <Row>
-                                        <Col md={6}>
-                                            <SevenDaysChart />
-                                        </Col>
-                                        <Col md={6}>
-                                            <TransactionTable2 />
-                                        </Col>
-                                    </Row>
-                                </div>
-                            </div>
-                        </div>
+                        <Row>
+                            <Col md={6}>
+                                <SevenDaysChart />
+                            </Col>
+                            <Col md={6}>
+                                <TransactionTable />
+                            </Col>
+                        </Row>
                     </div>
-                </Col>
-            </Row>
-        </Container>
+                </div>
+            </div>
+        </div>
     );
 };
 
