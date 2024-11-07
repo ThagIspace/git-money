@@ -1,5 +1,4 @@
-// AddIncomeP.js
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { IncomeContext } from '../context/IncomeContext';
 import { Form, Button, Modal, Row, Col } from 'react-bootstrap';
 import IncomeList from '../components/IncomeList';
@@ -8,7 +7,7 @@ import Nav from '../components/Nav';
 import Sidebar from '../components/Sidebar';
 
 const AddIncomeP = () => {
-    const { addIncome } = useContext(IncomeContext);
+    const { addIncome, editingIncome, setEditingIncome, updateIncome } = useContext(IncomeContext);
     const [isSidebarVisible, setSidebarVisible] = useState(false);
     const [isModalVisible, setModalVisible] = useState(false);
 
@@ -19,22 +18,44 @@ const AddIncomeP = () => {
         date: new Date().toISOString().split('T')[0],
     });
 
+    useEffect(() => {
+        if (editingIncome) {
+            setFormData({
+                title: editingIncome.title || '',
+                amount: editingIncome.amount ? editingIncome.amount.toString() : '',
+                description: editingIncome.description || '',
+                date: editingIncome.date ? new Date(editingIncome.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+            });
+            setModalVisible(true);
+        }
+    }, [editingIncome]);
+
     const toggleSidebar = () => setSidebarVisible(!isSidebarVisible);
 
     const handleInputChange = (field, value) => {
         if (field === 'amount') {
             value = new Intl.NumberFormat('vi-VN').format(value.replace(/\./g, ''));
         }
-        setFormData({ ...formData, [field]: value });
+        setFormData({ ...formData, [field]: value || '' });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addIncome({
-            ...formData,
-            amount: Number(formData.amount.replace(/\./g, '')),
-            description: formData.description || ' ',
-        });
+        if (editingIncome) {
+            updateIncome({
+                ...formData,
+                amount: Number(formData.amount.replace(/\./g, '')),
+                description: formData.description || ' ',
+                _id: editingIncome._id,
+            });
+            setEditingIncome(null);
+        } else {
+            addIncome({
+                ...formData,
+                amount: Number(formData.amount.replace(/\./g, '')),
+                description: formData.description || ' ',
+            });
+        }
         resetForm();
         setModalVisible(false);
     };
@@ -70,7 +91,7 @@ const AddIncomeP = () => {
                                 </div>
                                 <Modal show={isModalVisible} onHide={() => setModalVisible(false)}>
                                     <Modal.Header closeButton>
-                                        <Modal.Title >Thêm Thu Nhập</Modal.Title>
+                                        <Modal.Title>{editingIncome ? 'Chỉnh Sửa Thu Nhập' : 'Thêm Thu Nhập'}</Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
                                         <Form onSubmit={handleSubmit}>

@@ -69,3 +69,42 @@ exports.deleteExpense = async (req, res) => {
     }
 };
 
+// Cập nhật chi phí
+exports.updateExpense = async (req, res) => {
+    const { id } = req.params;
+    const { title, amount, category, description, date } = req.body;
+
+    try {
+        const existingExpense = await ExpenseSchema.findById(id);
+        if (!existingExpense) {
+            return res.status(404).json({ message: 'Expense not found' });
+        }
+
+        // Cập nhật thông tin chi phí
+        const updatedExpense = await ExpenseSchema.findByIdAndUpdate(
+            id,
+            { title, amount, category, description, date },
+            { new: true, runValidators: true }
+        );
+
+        // Cập nhật số tiền chi tiêu trong ngân sách (nếu danh mục thay đổi hoặc số tiền thay đổi)
+        if (updatedExpense.category !== existingExpense.category || updatedExpense.amount !== existingExpense.amount) {
+            const oldBudget = await BudgetSchema.findOne({ name: existingExpense.category });
+            if (oldBudget) {
+                oldBudget.spent -= existingExpense.amount;
+                await oldBudget.save();
+            }
+
+            const newBudget = await BudgetSchema.findOne({ name: updatedExpense.category });
+            if (newBudget) {
+                newBudget.spent += updatedExpense.amount;
+                await newBudget.save();
+            }
+        }
+
+        res.status(200).json({ message: 'Expense updated successfully', updatedExpense });
+    } catch (error) {
+        console.error('Error updating expense:', error);
+        res.status(500).json({ message: 'Server Error', error });
+    }
+};

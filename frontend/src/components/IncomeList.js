@@ -1,4 +1,3 @@
-// components/IncomeList.js
 import React, { useContext } from 'react';
 import { IncomeContext } from '../context/IncomeContext';
 import {
@@ -14,10 +13,11 @@ import {
     CircularProgress,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import Swal from 'sweetalert2';
 
 const IncomeList = () => {
-    const { incomes, deleteIncome, loading } = useContext(IncomeContext);
+    const { incomes, deleteIncome, setEditingIncome, loading } = useContext(IncomeContext);
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -31,17 +31,17 @@ const IncomeList = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 deleteIncome(id);
-                Swal.fire(
-                    'Đã xóa!',
-                    'Khoản thu nhập đã được xóa thành công.',
-                    'success'
-                );
+                Swal.fire('Đã xóa!', 'Khoản thu nhập đã được xóa thành công.', 'success');
             }
         });
     };
 
     if (loading) {
-        return <CircularProgress />;
+        return (
+            <div className="d-flex justify-content-center mt-5">
+                <CircularProgress />
+            </div>
+        );
     }
 
     return (
@@ -62,14 +62,15 @@ const IncomeList = () => {
                     </TableHead>
                     <TableBody>
                         {incomes.map((income) => (
-                            <TableRow key={income._id}>
+                            <TableRow key={income._id || income.id || Math.random().toString(36).substr(2, 9)}>
                                 <TableCell>{income.title}</TableCell>
-                                <TableCell>
-                                    {income.amount ? `${income.amount.toLocaleString('vi-VN')} đ` : 'N/A'}
-                                </TableCell>
+                                <TableCell>{income.amount ? `${income.amount.toLocaleString('vi-VN')} đ` : 'N/A'}</TableCell>
                                 <TableCell>{income.description}</TableCell>
                                 <TableCell>{new Date(income.date).toLocaleDateString()}</TableCell>
                                 <TableCell>
+                                    <IconButton onClick={() => setEditingIncome(income)} color="primary">
+                                        <EditIcon />
+                                    </IconButton>
                                     <IconButton onClick={() => handleDelete(income._id)} color="error">
                                         <DeleteIcon />
                                     </IconButton>
@@ -78,7 +79,7 @@ const IncomeList = () => {
                         ))}
                         {incomes.length === 0 && (
                             <TableRow>
-                                <TableCell colSpan={6} align="center">
+                                <TableCell colSpan={5} align="center">
                                     Không có dữ liệu
                                 </TableCell>
                             </TableRow>

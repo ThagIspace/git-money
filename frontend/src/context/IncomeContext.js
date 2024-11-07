@@ -5,10 +5,10 @@ import axios from 'axios';
 export const IncomeContext = createContext();
 
 export const IncomeProvider = ({ children }) => {
-    const [incomes, setIncomes] = useState([]); // Danh sách thu nhập
-    const [loading, setLoading] = useState(true); // Thêm state loading
+    const [incomes, setIncomes] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [editingIncome, setEditingIncome] = useState(null);
 
-    // Hàm để lấy danh sách thu nhập từ API
     const fetchIncomes = async () => {
         try {
             const response = await axios.get('http://localhost:5000/api/v1/get-incomes');
@@ -20,19 +20,27 @@ export const IncomeProvider = ({ children }) => {
         }
     };
 
-    // Hàm để thêm thu nhập
     const addIncome = async (income) => {
         try {
             const response = await axios.post('http://localhost:5000/api/v1/add-income', income);
-            setIncomes((prev) => [...prev, response.data]); // Cập nhật danh sách thu nhập
-            fetchIncomes(); // Gọi lại hàm để lấy dữ liệu mới
+            setIncomes((prev) => [...prev, response.data]);
+            fetchIncomes();
         } catch (error) {
             console.error('Error adding income:', error);
         }
     };
 
+    const updateIncome = async (updatedIncome) => {
+        try {
+            const response = await axios.put(`http://localhost:5000/api/v1/update-income/${updatedIncome._id}`, updatedIncome);
+            setIncomes((prev) =>
+                prev.map((income) => (income._id === updatedIncome._id ? response.data.updatedIncome : income))
+            );
+        } catch (error) {
+            console.error('Error updating income:', error);
+        }
+    };
 
-    // Hàm để xóa thu nhập
     const deleteIncome = async (id) => {
         try {
             await axios.delete(`http://localhost:5000/api/v1/delete-income/${id}`);
@@ -42,13 +50,12 @@ export const IncomeProvider = ({ children }) => {
         }
     };
 
-    // Gọi fetchIncomes khi Provider được khởi tạo
     useEffect(() => {
         fetchIncomes();
     }, []);
 
     return (
-        <IncomeContext.Provider value={{ incomes, setIncomes, addIncome, deleteIncome, loading }}>
+        <IncomeContext.Provider value={{ incomes, setIncomes, addIncome, deleteIncome, updateIncome, loading, editingIncome, setEditingIncome }}>
             {children}
         </IncomeContext.Provider>
     );
