@@ -1,4 +1,4 @@
-// components/ExpenseList.js
+// ExpenseList.js
 import React, { useContext } from 'react';
 import { ExpenseContext } from '../context/ExpenseContext';
 import {
@@ -14,10 +14,11 @@ import {
     CircularProgress,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import Swal from 'sweetalert2';
 
 const ExpenseList = () => {
-    const { expenses, deleteExpense, loading } = useContext(ExpenseContext);
+    const { expenses, deleteExpense, setEditingExpense, loading } = useContext(ExpenseContext);
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -31,17 +32,21 @@ const ExpenseList = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 deleteExpense(id);
-                Swal.fire(
-                    'Đã xóa!',
-                    'Khoản chi tiêu đã được xóa thành công.',
-                    'success'
-                );
+                Swal.fire('Đã xóa!', 'Khoản chi tiêu đã được xóa thành công.', 'success');
             }
         });
     };
 
+    const handleEdit = (expense) => {
+        setEditingExpense(expense);
+    };
+
     if (loading) {
-        return <CircularProgress />;
+        return (
+            <div className="d-flex justify-content-center mt-5">
+                <CircularProgress />
+            </div>
+        );
     }
 
     return (
@@ -63,15 +68,16 @@ const ExpenseList = () => {
                     </TableHead>
                     <TableBody>
                         {expenses.map((expense) => (
-                            <TableRow key={expense._id}>
+                            <TableRow key={expense._id || Math.random().toString(36).substr(2, 9)}>
                                 <TableCell>{expense.title}</TableCell>
-                                <TableCell>
-                                    {expense.amount ? `${expense.amount.toLocaleString('vi-VN')} đ` : 'N/A'}
-                                </TableCell>
+                                <TableCell>{expense.amount ? `${expense.amount.toLocaleString('vi-VN')} đ` : 'N/A'}</TableCell>
                                 <TableCell>{expense.category}</TableCell>
                                 <TableCell>{expense.description}</TableCell>
                                 <TableCell>{new Date(expense.date).toLocaleDateString()}</TableCell>
                                 <TableCell>
+                                    <IconButton onClick={() => handleEdit(expense)} color="primary">
+                                        <EditIcon />
+                                    </IconButton>
                                     <IconButton onClick={() => handleDelete(expense._id)} color="error">
                                         <DeleteIcon />
                                     </IconButton>

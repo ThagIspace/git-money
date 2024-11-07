@@ -6,6 +6,7 @@ import { ExpenseContext } from '../context/ExpenseContext';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { ExpenseChart } from '../charts/ExpenseChart';
 import TransactionTable from '../charts/TransactionTable';
+import TransactionTable2 from '../charts/TransactionTable2';
 import SevenDaysChart from '../charts/Sevendays';
 import Ex_InChart from '../charts/Ex_InChart';
 import Nav from '../components/Nav';
@@ -94,7 +95,7 @@ const DashboardP = () => {
                                 <SevenDaysChart />
                             </Col>
                             <Col md={6}>
-                                <TransactionTable />
+                                <TransactionTable2 />
                             </Col>
                         </Row>
                     </div>

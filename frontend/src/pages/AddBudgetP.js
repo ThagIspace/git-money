@@ -1,47 +1,41 @@
 // AddBudgetP.js
 import React, { useState, useContext } from 'react';
 import { BudgetContext } from '../context/BudgetContext';
-import { Form, Button, Container, Row, Col, Modal } from 'react-bootstrap';
+import { Form, Button, Row, Col, Modal } from 'react-bootstrap';
 import BudgetList from '../components/BudgetList';
 import TopBar from '../components/Topbar';
 import Nav from '../components/Nav';
-import Sidebar from '../components/Sidebar'; // Import Sidebar component
+import Sidebar from '../components/Sidebar';
 
 const AddBudgetP = () => {
     const { addBudget } = useContext(BudgetContext);
     const [isModalVisible, setModalVisible] = useState(false);
     const [isSidebarVisible, setSidebarVisible] = useState(false);
 
-    const [formData, setFormData] = useState({
-        name: '',
-        amount: ''
-    });
+    const [formData, setFormData] = useState({ name: '', amount: '' });
 
     const toggleSidebar = () => setSidebarVisible(!isSidebarVisible);
 
     const handleInputChange = (field, value) => {
         if (field === 'amount') {
-            // Định dạng số tiền
-            value = new Intl.NumberFormat('vi-VN').format(value.replace(/\./g, ''));
+            value = value.replace(/\./g, ''); // Xóa dấu chấm để tránh lỗi định dạng số
         }
         setFormData({ ...formData, [field]: value });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const budget = {
-            name: formData.name,
-            amount: Number(formData.amount.replace(/\./g, ''))
-        };
-        addBudget(budget);
-        setFormData({ name: '', amount: '' });
+        addBudget({ name: formData.name, amount: Number(formData.amount) });
+        resetForm();
         setModalVisible(false);
     };
 
+    const resetForm = () => setFormData({ name: '', amount: '' });
+
     return (
-        <div className='mt-5'>
+        <div className="mt-5">
             <div className={`d-flex ${isSidebarVisible ? 'sidebar-open' : ''}`} id="wrapper">
-                <Sidebar /> {/* Sử dụng Sidebar component */}
+                <Sidebar />
                 <div id="page-content-wrapper">
                     <TopBar onToggleSidebar={toggleSidebar} />
                     <Nav toggleSidebar={toggleSidebar} className="d-lg-none" />
@@ -57,7 +51,7 @@ const AddBudgetP = () => {
                                     </Modal.Header>
                                     <Modal.Body>
                                         <Form onSubmit={handleSubmit}>
-                                            <Form.Group controlId="name">
+                                            <Form.Group controlId="name" className="mt-3">
                                                 <Form.Label>Tên Ngân Sách</Form.Label>
                                                 <Form.Control
                                                     type="text"
