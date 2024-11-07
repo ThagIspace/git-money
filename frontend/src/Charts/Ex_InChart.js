@@ -60,7 +60,7 @@ const Ex_InChart = ({ totalIncome, totalExpense }) => {
                                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                     ))}
                                 </Pie>
-                                <Tooltip formatter={formatCurrency} /> {/* Format the currency with 'VNĐ' and '.' */}
+                                <Tooltip formatter={formatCurrency} />
                                 <Legend />
                             </PieChart>
                         </ResponsiveContainer>

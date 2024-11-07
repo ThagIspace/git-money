@@ -81,6 +81,7 @@ export const ExpenseProvider = ({ children }) => {
         <ExpenseContext.Provider
             value={{
                 expenses,
+                setExpenses,
                 addExpense,
                 deleteExpense,
                 updateExpense,

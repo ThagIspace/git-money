@@ -8,6 +8,7 @@ import { ExpenseChart } from '../charts/ExpenseChart';
 import TransactionTable from '../charts/TransactionTable';
 import TransactionTable2 from '../charts/TransactionTable2';
 import SevenDaysChart from '../charts/Sevendays';
+import IncomeChart from '../charts/IncomeChart';
 import Ex_InChart from '../charts/Ex_InChart';
 import Nav from '../components/Nav';
 import TopBar from '../components/Topbar';
@@ -69,15 +70,15 @@ const DashboardP = () => {
 
                         <Row>
                             <Col md={6}>
-                                <Ex_InChart totalIncome={totalIncome} totalExpense={totalExpense} />
+                                <IncomeChart />
                             </Col>
                             <Col md={6}>
-                                <SevenDaysChart />
+                                <Ex_InChart totalIncome={totalIncome} totalExpense={totalExpense} />
                             </Col>
                         </Row>
 
                         <Row>
-                            <Col md={6}>
+                            <Col md={6} >
                                 <TransactionTable />
                             </Col>
                             <Col md={6}>
