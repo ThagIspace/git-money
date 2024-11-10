@@ -1,8 +1,8 @@
-// AddExpenseP.js
 import React, { useState, useContext, useEffect } from 'react';
 import { ExpenseContext } from '../context/ExpenseContext';
 import { BudgetContext } from '../context/BudgetContext';
-import { Form, Button, Row, Col, Modal } from 'react-bootstrap';
+import { Button, Row, Col, Modal } from 'react-bootstrap';
+import ExpenseForm from '../components/ExpenseForm'; // Import ExpenseForm
 import ExpenseList from '../components/ExpenseList';
 import TopBar from '../components/Topbar';
 import Nav from '../components/Nav';
@@ -101,66 +101,13 @@ const AddExpenseP = () => {
                                         <Modal.Title>{editingExpense ? 'Chỉnh Sửa Chi Phí' : 'Thêm Chi Phí'}</Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
-                                        <Form onSubmit={handleSubmit}>
-                                            <Form.Group controlId="title" className="mt-3">
-                                                <Form.Label>Tiêu Đề</Form.Label>
-                                                <Form.Control
-                                                    type="text"
-                                                    placeholder="Nhập tiêu đề"
-                                                    value={formData.title}
-                                                    onChange={(e) => handleInputChange('title', e.target.value)}
-                                                    required
-                                                />
-                                            </Form.Group>
-                                            <Form.Group controlId="amount" className="mt-3">
-                                                <Form.Label>Số Tiền</Form.Label>
-                                                <Form.Control
-                                                    type="text"
-                                                    placeholder="Nhập số tiền"
-                                                    value={formData.amount}
-                                                    onChange={(e) => handleInputChange('amount', e.target.value)}
-                                                    required
-                                                />
-                                            </Form.Group>
-                                            <Form.Group controlId="category" className="mt-3">
-                                                <Form.Label>Danh Mục</Form.Label>
-                                                <Form.Control
-                                                    as="select"
-                                                    value={formData.category}
-                                                    onChange={(e) => handleInputChange('category', e.target.value)}
-                                                    required
-                                                >
-                                                    <option value="">Chọn danh mục</option>
-                                                    {budgets.map((budget) => (
-                                                        <option key={budget._id} value={budget.name}>
-                                                            {budget.name}
-                                                        </option>
-                                                    ))}
-                                                </Form.Control>
-                                            </Form.Group>
-                                            <Form.Group controlId="description" className="mt-3">
-                                                <Form.Label>Mô Tả</Form.Label>
-                                                <Form.Control
-                                                    type="text"
-                                                    placeholder="Nhập mô tả (không bắt buộc)"
-                                                    value={formData.description}
-                                                    onChange={(e) => handleInputChange('description', e.target.value)}
-                                                />
-                                            </Form.Group>
-                                            <Form.Group controlId="date" className="mt-3">
-                                                <Form.Label>Ngày</Form.Label>
-                                                <Form.Control
-                                                    type="date"
-                                                    value={formData.date}
-                                                    onChange={(e) => handleInputChange('date', e.target.value)}
-                                                    required
-                                                />
-                                            </Form.Group>
-                                            <div className="d-flex justify-content-center mt-4">
-                                                <Button variant="primary" type="submit">Xác Nhận</Button>
-                                                <Button variant="secondary" onClick={() => setModalVisible(false)} className="ms-2">Huỷ</Button>
-                                            </div>
-                                        </Form>
+                                        <ExpenseForm
+                                            formData={formData}
+                                            handleInputChange={handleInputChange}
+                                            handleSubmit={handleSubmit}
+                                            budgets={budgets}
+                                            onCancel={() => setModalVisible(false)}
+                                        />
                                     </Modal.Body>
                                 </Modal>
                             </Col>

@@ -35,11 +35,10 @@ const Ex_InChart = ({ totalIncome, totalExpense }) => {
         { name: 'Chi tiêu', value: totalExpense }
     ];
 
-    const COLORS = ['#0088FE', '#FF8042']; // Colors for Pie chart
+    const COLORS = ['#0088FE', '#FF8042'];
 
     return (
         <Row>
-            {/* Pie Chart */}
             <Col md={12}>
                 <Card className="mb-4 mt-4">
                     <Card.Body>
@@ -52,7 +51,7 @@ const Ex_InChart = ({ totalIncome, totalExpense }) => {
                                     cy="50%"
                                     labelLine={false}
                                     outerRadius={150}
-                                    label={renderCustomizedLabel} // Show percentage inside the pie
+                                    label={renderCustomizedLabel}
                                     fill="#8884d8"
                                     dataKey="value"
                                 >

@@ -1,15 +1,16 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { IncomeContext } from '../context/IncomeContext';
-import { Form, Button, Modal, Row, Col } from 'react-bootstrap';
-import IncomeList from '../components/IncomeList';
+import { Button, Row, Col, Modal } from 'react-bootstrap'; // Thêm Modal từ react-bootstrap
+import IncomeForm from '../components/IncomeForm';
 import TopBar from '../components/Topbar';
 import Nav from '../components/Nav';
 import Sidebar from '../components/Sidebar';
+import IncomeList from '../components/IncomeList';
 
 const AddIncomeP = () => {
     const { addIncome, editingIncome, setEditingIncome, updateIncome } = useContext(IncomeContext);
     const [isSidebarVisible, setSidebarVisible] = useState(false);
-    const [isModalVisible, setModalVisible] = useState(false);
+    const [isModalVisible, setModalVisible] = useState(false); // Trạng thái hiển thị modal
 
     const [formData, setFormData] = useState({
         title: '',
@@ -26,7 +27,7 @@ const AddIncomeP = () => {
                 description: editingIncome.description || '',
                 date: editingIncome.date ? new Date(editingIncome.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
             });
-            setModalVisible(true);
+            setModalVisible(true); // Hiển thị modal khi chỉnh sửa
         }
     }, [editingIncome]);
 
@@ -34,13 +35,13 @@ const AddIncomeP = () => {
 
     const handleInputChange = (field, value) => {
         if (field === 'amount') {
-            value = new Intl.NumberFormat('vi-VN').format(value.replace(/\./g, ''));
+            value = value.replace(/\./g, ''); // Xóa dấu chấm để tránh lỗi nhập số
         }
-        setFormData({ ...formData, [field]: value || '' });
+        setFormData({ ...formData, [field]: value });
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        if (e) e.preventDefault();
         if (editingIncome) {
             updateIncome({
                 ...formData,
@@ -57,7 +58,7 @@ const AddIncomeP = () => {
             });
         }
         resetForm();
-        setModalVisible(false);
+        setModalVisible(false); // Ẩn modal sau khi thêm hoặc cập nhật
     };
 
     const resetForm = () => {
@@ -69,13 +70,6 @@ const AddIncomeP = () => {
         });
     };
 
-    const formFields = [
-        { id: 'title', label: 'Tiêu Đề', type: 'text', required: true },
-        { id: 'amount', label: 'Số Tiền', type: 'text', required: true },
-        { id: 'description', label: 'Mô Tả', type: 'text' },
-        { id: 'date', label: 'Ngày', type: 'date', required: true },
-    ];
-
     return (
         <div className='mt-5'>
             <div className={`d-flex ${isSidebarVisible ? 'sidebar-open' : ''}`} id="wrapper">
@@ -86,32 +80,21 @@ const AddIncomeP = () => {
                     <div className="container-fluid">
                         <Row className="justify-content-center mt-5">
                             <Col md={6}>
+                                {/* Nút bấm hiển thị modal */}
                                 <div className="text-center">
                                     <Button variant="primary" onClick={() => setModalVisible(true)}>Thêm Thu Nhập</Button>
                                 </div>
+                                {/* Hiển thị modal khi isModalVisible là true */}
                                 <Modal show={isModalVisible} onHide={() => setModalVisible(false)}>
                                     <Modal.Header closeButton>
                                         <Modal.Title>{editingIncome ? 'Chỉnh Sửa Thu Nhập' : 'Thêm Thu Nhập'}</Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
-                                        <Form onSubmit={handleSubmit}>
-                                            {formFields.map(({ id, label, type, required }) => (
-                                                <Form.Group controlId={id} key={id} className="mt-3">
-                                                    <Form.Label>{label}</Form.Label>
-                                                    <Form.Control
-                                                        type={type}
-                                                        placeholder={`Nhập ${label.toLowerCase()}`}
-                                                        value={formData[id]}
-                                                        onChange={(e) => handleInputChange(id, e.target.value)}
-                                                        required={required}
-                                                    />
-                                                </Form.Group>
-                                            ))}
-                                            <div className="d-flex justify-content-center mt-4">
-                                                <Button variant="primary" type="submit">Xác Nhận</Button>
-                                                <Button variant="secondary" onClick={() => setModalVisible(false)} className="ms-2">Huỷ</Button>
-                                            </div>
-                                        </Form>
+                                        <IncomeForm
+                                            formData={formData}
+                                            handleInputChange={handleInputChange}
+                                            handleSubmit={handleSubmit}
+                                        />
                                     </Modal.Body>
                                 </Modal>
                             </Col>

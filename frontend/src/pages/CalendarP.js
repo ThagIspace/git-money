@@ -1,4 +1,3 @@
-// CalendarP.js
 import React, { useState, useContext, useEffect, useMemo } from 'react';
 import { ExpenseContext } from '../context/ExpenseContext';
 import { IncomeContext } from '../context/IncomeContext';
@@ -6,19 +5,30 @@ import CalendarList from '../components/CalendarList';
 import TopBar from '../components/Topbar';
 import Nav from '../components/Nav';
 import Sidebar from '../components/Sidebar';
+import IncomeForm from '../components/IncomeForm'; // Import IncomeForm
+import ExpenseForm from '../components/ExpenseForm'; // Import ExpenseForm
+import { Modal } from 'react-bootstrap'; // Import Modal từ react-bootstrap
+import { BudgetContext } from '../context/BudgetContext'; // Import BudgetContext
 import '../assets/style/calendar.css';
 
 const CalendarP = () => {
-    const { expenses } = useContext(ExpenseContext);
-    const { incomes } = useContext(IncomeContext);
+    const { budgets } = useContext(BudgetContext); // Lấy budgets từ context
+    const { expenses, editingExpense, setEditingExpense, updateExpense } = useContext(ExpenseContext);
+    const { incomes, editingIncome, setEditingIncome, updateIncome } = useContext(IncomeContext);
     const [currentDate, setCurrentDate] = useState(new Date());
     const [selectedDay, setSelectedDay] = useState(null);
     const [detailVisible, setDetailVisible] = useState(false);
     const [isSidebarVisible, setSidebarVisible] = useState(false);
+    const [isModalVisible, setModalVisible] = useState(false); // Trạng thái kiểm soát hiển thị Modal
+
+    useEffect(() => {
+        if (editingIncome || editingExpense) {
+            setModalVisible(true); // Hiển thị modal khi có dữ liệu cần chỉnh sửa
+        }
+    }, [editingIncome, editingExpense]);
 
     const toggleSidebar = () => setSidebarVisible(!isSidebarVisible);
 
-    // Định dạng dữ liệu expenses và incomes khi thay đổi
     const formattedData = useMemo(() => {
         const formatDate = (dateStr) => new Date(dateStr).toISOString().split('T')[0];
         return {
@@ -27,25 +37,19 @@ const CalendarP = () => {
         };
     }, [expenses, incomes]);
 
-    // Tạo các ngày trong tháng
     const getMonthDays = useMemo(() => {
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
         const firstDayOfMonth = new Date(year, month, 1);
         const lastDayOfMonth = new Date(year, month + 1, 0);
         const days = [];
-
-        // Thêm các ngày của tháng trước
         const prevMonthLastDay = new Date(year, month, 0);
         for (let i = firstDayOfMonth.getDay(); i > 1; i--) {
             days.unshift(new Date(year, month - 1, prevMonthLastDay.getDate() - i + 2));
         }
-
-        // Thêm các ngày của tháng hiện tại
         for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
             days.push(new Date(year, month, day));
         }
-
         return days;
     }, [currentDate]);
 
@@ -57,25 +61,22 @@ const CalendarP = () => {
         const formattedDate = date.toISOString().split('T')[0];
         const dailyExpenses = formattedData.expenses.filter(exp => exp.date === formattedDate);
         const dailyIncome = formattedData.incomes.filter(inc => inc.date === formattedDate);
-
         const totalExpense = dailyExpenses.reduce((sum, exp) => sum + exp.amount, 0);
         const totalIncome = dailyIncome.reduce((sum, inc) => sum + inc.amount, 0);
-
         return totalIncome - totalExpense;
     };
 
     const renderDayCell = (date, index) => {
         if (!date) return <td key={`empty-${index}`} className="empty-cell"></td>;
-
         const formattedDate = date.toISOString().split('T')[0];
-        const hasExpense = formattedData.expenses.some(exp => exp.date === formattedDate);
-        const hasIncome = formattedData.incomes.some(inc => inc.date === formattedDate);
+        const dailyExpenses = formattedData.expenses.filter(exp => exp.date === formattedDate);
+        const dailyIncome = formattedData.incomes.filter(inc => inc.date === formattedDate);
+        const hasExpense = dailyExpenses.length > 0;
+        const hasIncome = dailyIncome.length > 0;
         const netAmount = calculateNetAmount(date);
 
         const handleDayClick = () => {
             if (date.getMonth() === currentDate.getMonth()) {
-                const dailyExpenses = formattedData.expenses.filter(exp => exp.date === formattedDate);
-                const dailyIncome = formattedData.incomes.filter(inc => inc.date === formattedDate);
                 setSelectedDay({ date: formattedDate, expenses: dailyExpenses, incomes: dailyIncome });
                 setDetailVisible(true);
             }
@@ -90,10 +91,11 @@ const CalendarP = () => {
                 <div>{date.getDate()}</div>
                 {hasIncome && <div className="income-dot"></div>}
                 {hasExpense && <div className="expense-dot"></div>}
-                {netAmount !== 0 && (
+                {/* Chỉ hiển thị netAmount nếu có dữ liệu */}
+                {(hasIncome || hasExpense) && (
                     <div
                         className="day-amount"
-                        style={{ color: netAmount > 0 ? 'green' : 'red' }}
+                        style={{ color: netAmount > 0 ? 'green' : (netAmount < 0 ? 'red' : 'green') }}
                     >
                         {netAmount.toLocaleString('vi-VN')} đ
                     </div>
@@ -101,6 +103,7 @@ const CalendarP = () => {
             </td>
         );
     };
+
 
     return (
         <div className={`d-flex ${isSidebarVisible ? 'sidebar-open' : ''}`} id="wrapper">
@@ -145,6 +148,53 @@ const CalendarP = () => {
                     </div>
 
                     {detailVisible && <CalendarList selectedDay={selectedDay} />}
+
+                    {/* Modal hiển thị form khi chỉnh sửa */}
+                    <Modal show={isModalVisible} onHide={() => setModalVisible(false)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>
+                                {editingIncome ? 'Chỉnh Sửa Thu Nhập' : 'Chỉnh Sửa Chi Phí'}
+                            </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            {editingIncome && (
+                                <IncomeForm
+                                    formData={editingIncome}
+                                    handleInputChange={(field, value) => setEditingIncome({ ...editingIncome, [field]: value })}
+                                    handleSubmit={(e) => {
+                                        if (e) e.preventDefault();
+                                        // Gọi hàm updateIncome để cập nhật dữ liệu thu nhập
+                                        updateIncome(editingIncome);
+                                        setEditingIncome(null);
+                                        setModalVisible(false);
+                                    }}
+                                    onCancel={() => {
+                                        setEditingIncome(null);
+                                        setModalVisible(false);
+                                    }}
+                                />
+                            )}
+                            {editingExpense && (
+                                <ExpenseForm
+                                    formData={editingExpense}
+                                    handleInputChange={(field, value) => setEditingExpense({ ...editingExpense, [field]: value })}
+                                    handleSubmit={(e) => {
+                                        if (e) e.preventDefault();
+                                        // Gọi hàm updateExpense để cập nhật dữ liệu
+                                        updateExpense(editingExpense);
+                                        setEditingExpense(null);
+                                        setModalVisible(false);
+                                    }}
+                                    budgets={budgets} // Truyền budgets vào ExpenseForm
+                                    onCancel={() => {
+                                        setEditingExpense(null);
+                                        setModalVisible(false);
+                                    }}
+                                />
+                            )}
+                        </Modal.Body>
+                    </Modal>
+
                 </div>
             </div>
         </div>

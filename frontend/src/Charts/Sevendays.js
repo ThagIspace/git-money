@@ -16,9 +16,9 @@ const generateDataForLast7Days = () => {
         const dayName = dayNames[date.getDay()];
 
         data.unshift({
-            day: `${dayName}, ngày ${date.getDate()}`, // Định dạng ngày với tên ngày trong tuần
-            income: Math.floor(Math.random() * 1000000), // Tạo thu nhập ngẫu nhiên
-            expense: Math.floor(Math.random() * 1000000), // Tạo chi tiêu ngẫu nhiên
+            day: `${dayName}, ngày ${date.getDate()}`,
+            income: Math.floor(Math.random() * 1000000),
+            expense: Math.floor(Math.random() * 1000000),
         });
     }
 
@@ -27,11 +27,10 @@ const generateDataForLast7Days = () => {
 
 const SevenDaysChart = () => {
     const [showModal, setShowModal] = useState(false);
-    const [filter, setFilter] = useState('both'); // Trạng thái lọc (income, expense hoặc cả hai)
+    const [filter, setFilter] = useState('both');
     const [data, setData] = useState(generateDataForLast7Days());
 
     useEffect(() => {
-        // Cập nhật dữ liệu mỗi khi tháng hoặc ngày thay đổi
         setData(generateDataForLast7Days());
     }, []);
 
