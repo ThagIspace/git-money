@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { Card, Dropdown, DropdownButton, Modal, Button } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Card } from 'react-bootstrap';
+import SelectableModal from '../components/SelectableModal'; // Import SelectableModal
+import { FaEllipsisV } from 'react-icons/fa';
+
 
 const generateDataForLast7Days = () => {
     const today = new Date();
@@ -11,7 +13,6 @@ const generateDataForLast7Days = () => {
         const date = new Date();
         date.setDate(today.getDate() - i);
 
-        // Định dạng lại tên ngày
         const dayNames = ["CN", "Th 2", "Th 3", "Th 4", "Th 5", "Th 6", "Th 7"];
         const dayName = dayNames[date.getDay()];
 
@@ -45,11 +46,18 @@ const SevenDaysChart = () => {
         expense: filter === 'income' ? 0 : item.expense,
     }));
 
+    // Các tùy chọn cho modal
+    const options = [
+        { label: 'Thu nhập', onSelect: () => handleFilterChange('income') },
+        { label: 'Chi tiêu', onSelect: () => handleFilterChange('expense') },
+        { label: 'Cả hai', onSelect: () => handleFilterChange('both') },
+    ];
+
     return (
         <Card className="p-3">
             <div className="d-flex justify-content-between">
                 <h5>7 ngày qua</h5>
-                <div onClick={() => setShowModal(true)} style={{ cursor: 'pointer' }}>⋮</div>
+                <FaEllipsisV onClick={() => setShowModal(true)} style={{ cursor: 'pointer' }} />
             </div>
             <ResponsiveContainer width="100%" height={400}>
                 <BarChart data={filteredData}>
@@ -66,33 +74,13 @@ const SevenDaysChart = () => {
                 </BarChart>
             </ResponsiveContainer>
 
-            {/* Modal để chọn loại dữ liệu hiển thị */}
-            <Modal show={showModal} onHide={() => setShowModal(false)}>
-                <Modal.Header closeButton>
-                    <Modal.Title>7 NGÀY QUA</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <DropdownButton title="Số mục hiển thị:" variant="secondary">
-                        <Dropdown.Item onClick={() => handleFilterChange('income')}>
-                            Thu nhập
-                        </Dropdown.Item>
-                        <Dropdown.Item onClick={() => handleFilterChange('expense')}>
-                            Chi tiêu
-                        </Dropdown.Item>
-                        <Dropdown.Item onClick={() => handleFilterChange('both')}>
-                            Cả hai
-                        </Dropdown.Item>
-                    </DropdownButton>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowModal(false)}>
-                        HỦY
-                    </Button>
-                    <Button variant="primary" onClick={() => setShowModal(false)}>
-                        LƯU LẠI
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+            {/* Sử dụng SelectableModal với các tùy chọn */}
+            <SelectableModal
+                show={showModal}
+                onClose={() => setShowModal(false)}
+                title="7 NGÀY QUA"
+                options={options} // Truyền các tùy chọn
+            />
         </Card>
     );
 };

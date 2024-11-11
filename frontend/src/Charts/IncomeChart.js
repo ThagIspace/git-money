@@ -1,20 +1,16 @@
 import React, { useContext, useState } from 'react';
 import { IncomeContext } from '../context/IncomeContext';
-import { DropdownButton, Dropdown } from 'react-bootstrap';
-
 import {
     Table,
     TableBody,
     TableCell,
     TableContainer,
-    TableHead,
     TableRow,
     Paper,
     Typography,
-    Modal,
-    Button,
 } from '@mui/material';
 import { FaEllipsisV } from 'react-icons/fa';
+import SelectableModal from '../components/SelectableModal'; // Import SelectableModal
 
 const IncomeChart = () => {
     const { incomes } = useContext(IncomeContext);
@@ -25,6 +21,14 @@ const IncomeChart = () => {
         setItemsToShow(number);
         setShowModal(false);
     };
+
+    // Các tùy chọn cho modal
+    const options = [
+        { label: '1 mục', onSelect: () => handleItemsToShowChange(1) },
+        { label: '2 mục', onSelect: () => handleItemsToShowChange(2) },
+        { label: '3 mục', onSelect: () => handleItemsToShowChange(3) },
+        { label: '4 mục', onSelect: () => handleItemsToShowChange(4) },
+    ];
 
     return (
         <div className="mt-4" style={{ border: '1px solid #ccc', borderRadius: '20px', overflow: 'hidden' }}>
@@ -46,34 +50,19 @@ const IncomeChart = () => {
                                 >
                                     {income.amount ? `${income.amount.toLocaleString('vi-VN')} đ` : 'N/A'}
                                 </TableCell>
-
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Modal open={showModal} onClose={() => setShowModal(false)}>
-                <div style={{ padding: '20px', background: 'white', margin: 'auto', width: '300px', top: '20%', position: 'relative' }}>
-                    <Typography variant="h6" gutterBottom>
-                        CÁC THU NHẬP
-                    </Typography>
-                    <DropdownButton title="Số mục hiển thị:" variant="secondary">
-                        {[1, 2, 3, 4, 5].map((number) => (
-                            <Dropdown.Item key={number} onClick={() => handleItemsToShowChange(number)}>
-                                {number}
-                            </Dropdown.Item>
-                        ))}
-                    </DropdownButton>
-                    <div className="mt-3 d-flex justify-content-end">
-                        <Button variant="contained" color="secondary" onClick={() => setShowModal(false)} style={{ marginRight: '10px' }}>
-                            HỦY
-                        </Button>
-                        <Button variant="contained" color="primary" onClick={() => setShowModal(false)}>
-                            LƯU LẠI
-                        </Button>
-                    </div>
-                </div>
-            </Modal>
+
+            {/* Sử dụng SelectableModal */}
+            <SelectableModal
+                show={showModal}
+                onClose={() => setShowModal(false)}
+                title="CÁC THU NHẬP"
+                options={options} // Truyền các tùy chọn
+            />
         </div>
     );
 };

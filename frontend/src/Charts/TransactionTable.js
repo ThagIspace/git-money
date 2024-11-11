@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { IncomeContext } from '../context/IncomeContext';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { ExpenseContext } from '../context/ExpenseContext';
 
 const TransactionTable = () => {
