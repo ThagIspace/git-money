@@ -1,4 +1,6 @@
 import { Line } from 'react-chartjs-2';
+import { useContext } from 'react';
+import { ExpenseContext } from '../context/ExpenseContext';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -7,16 +9,20 @@ import {
     LineElement,
     LineController,
     Tooltip,
-    Legend
+    Legend,
 } from 'chart.js';
-import { useContext } from 'react';
-import { ExpenseContext } from '../context/ExpenseContext'; // Assuming the context is available
+import {
+    TableContainer,
+    Paper,
+    Typography,
+} from '@mui/material';
+import { Card } from 'react-bootstrap';
 
 // Register the required components for Chart.js
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, LineController, Tooltip, Legend);
 
 export const ExpenseChart = () => {
-    const { expenses } = useContext(ExpenseContext); // Get the expense data from context
+    const { expenses } = useContext(ExpenseContext);
 
     // Process expenses into monthly totals
     const monthlyTotals = {};
@@ -28,8 +34,8 @@ export const ExpenseChart = () => {
         monthlyTotals[month] += expense.amount;
     });
 
-    const labels = Object.keys(monthlyTotals); // Labels for each month
-    const dataPoints = Object.values(monthlyTotals); // Expense amounts for each month
+    const labels = Object.keys(monthlyTotals);
+    const dataPoints = Object.values(monthlyTotals);
 
     // Data for the chart
     const data = {
@@ -39,8 +45,9 @@ export const ExpenseChart = () => {
                 label: 'Chi tiêu',
                 data: dataPoints,
                 fill: false,
-                backgroundColor: 'red',
-                borderColor: 'rgba(255,99,132,1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                tension: 0.4, // Smooth out the lines
             },
         ],
     };
@@ -55,9 +62,13 @@ export const ExpenseChart = () => {
                 labels: {
                     color: 'black',
                     font: {
-                        size: 14
-                    }
-                }
+                        size: 14,
+                    },
+                },
+            },
+            tooltip: {
+                mode: 'index',
+                intersect: false,
             },
         },
         scales: {
@@ -65,10 +76,17 @@ export const ExpenseChart = () => {
                 ticks: {
                     color: 'black',
                 },
+                grid: {
+                    display: false, // Hide grid lines for cleaner look
+                },
             },
             y: {
                 ticks: {
                     color: 'black',
+                    maxTicksLimit: 5, // Limit the number of ticks on the y-axis
+                },
+                grid: {
+                    color: '#e0e0e0',
                 },
                 beginAtZero: true,
             },
@@ -76,8 +94,15 @@ export const ExpenseChart = () => {
     };
 
     return (
-        <div style={{ height: '300px', width: '100%' }}>
-            <Line data={data} options={options} />
-        </div>
+        <Card className='mb-4' style={{ overflow: 'hidden' }}>
+            <TableContainer component={Paper} style={{ padding: '16px' }}>
+                <Typography variant="h6" style={{ fontWeight: 'bold', marginBottom: '16px' }}>
+                    Chi tiêu hằng tháng
+                </Typography>
+                <div style={{ height: '300px', maxWidth: '100%', overflowX: 'auto' }}>
+                    <Line data={data} options={options} />
+                </div>
+            </TableContainer>
+        </Card>
     );
 };

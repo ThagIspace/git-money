@@ -31,7 +31,7 @@ const TransactionTable2 = () => {
     ];
 
     return (
-        <Card className="mb-4 mt-4">
+        <Card className="mb-4">
             <Card.Body>
                 <div className="d-flex justify-content-between">
                     <Card.Title>Các giao dịch</Card.Title>

@@ -23,7 +23,7 @@ const TransactionTable = () => {
     const averageExpensePerTransaction = totalExpense / (expenseTransactions || 1);
 
     return (
-        <Card className="mb-4 mt-4">
+        <Card className="mb-4">
             <Card.Body>
                 <Card.Title>Dòng tiền (Giao dịch)</Card.Title>
                 <table className="table table-bordered">

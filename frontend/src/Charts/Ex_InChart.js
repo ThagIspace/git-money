@@ -38,35 +38,31 @@ const Ex_InChart = ({ totalIncome, totalExpense }) => {
     const COLORS = ['#0088FE', '#FF8042'];
 
     return (
-        <Row>
-            <Col md={12}>
-                <Card className="mb-4 mt-4">
-                    <Card.Body>
-                        <Card.Title>Thu nhập và Chi tiêu</Card.Title>
-                        <ResponsiveContainer width="100%" height={400}>
-                            <PieChart>
-                                <Pie
-                                    data={data}
-                                    cx="50%"
-                                    cy="50%"
-                                    labelLine={false}
-                                    outerRadius={150}
-                                    label={renderCustomizedLabel}
-                                    fill="#8884d8"
-                                    dataKey="value"
-                                >
-                                    {data.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                    ))}
-                                </Pie>
-                                <Tooltip formatter={formatCurrency} />
-                                <Legend />
-                            </PieChart>
-                        </ResponsiveContainer>
-                    </Card.Body>
-                </Card>
-            </Col>
-        </Row>
+        <Card className='mb-4'>
+            <Card.Body>
+                <Card.Title>Thu nhập và Chi tiêu</Card.Title>
+                <ResponsiveContainer width="100%" height={400}>
+                    <PieChart>
+                        <Pie
+                            data={data}
+                            cx="50%"
+                            cy="50%"
+                            labelLine={false}
+                            outerRadius={150}
+                            label={renderCustomizedLabel}
+                            fill="#8884d8"
+                            dataKey="value"
+                        >
+                            {data.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
+                        </Pie>
+                        <Tooltip formatter={formatCurrency} />
+                        <Legend />
+                    </PieChart>
+                </ResponsiveContainer>
+            </Card.Body>
+        </Card>
     );
 };
 

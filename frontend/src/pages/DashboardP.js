@@ -1,8 +1,10 @@
-// DashboardP.js
 import React, { useState, useEffect, useContext } from 'react';
 import { IncomeContext } from '../context/IncomeContext';
 import { ExpenseContext } from '../context/ExpenseContext';
-import { Row, Col, Card } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
+import Balance from '../charts/Balance';
+import TotalIncome from '../charts/TotalIncome';
+import TotalExpense from '../charts/TotalExpense';
 import { ExpenseChart } from '../charts/ExpenseChart';
 import TransactionTable from '../charts/TransactionTable';
 import TransactionTable2 from '../charts/TransactionTable2';
@@ -12,31 +14,18 @@ import Ex_InChart from '../charts/Ex_InChart';
 import Nav from '../components/Nav';
 import TopBar from '../components/Topbar';
 import Sidebar from '../components/Sidebar';
-import '../assets/style/sidebar.css';
-import axios from 'axios';
 import BudgetChart from '../charts/BudgetChart';
+import '../assets/style/sidebar.css';
+import '../assets/style/dashboard.css';
 
 const DashboardP = () => {
     const [isSidebarVisible, setSidebarVisible] = useState(false);
-    const { incomes, setIncomes } = useContext(IncomeContext);
-    const { expenses, setExpenses } = useContext(ExpenseContext);
+    const { incomes } = useContext(IncomeContext);
+    const { expenses } = useContext(ExpenseContext);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [incomeResponse, expenseResponse] = await Promise.all([
-                    axios.get('http://localhost:5000/api/v1/get-incomes'),
-                    axios.get('http://localhost:5000/api/v1/get-expenses')
-                ]);
-                setIncomes(incomeResponse.data);
-                setExpenses(expenseResponse.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        fetchData();
-    }, [setIncomes, setExpenses]);
+        // Logic fetching dữ liệu từ API nếu cần
+    }, []);
 
     const totalIncome = incomes.reduce((acc, income) => acc + income.amount, 0);
     const totalExpense = expenses.reduce((acc, expense) => acc + expense.amount, 0);
@@ -53,58 +42,40 @@ const DashboardP = () => {
                     <Nav toggleSidebar={toggleSidebar} className="d-lg-none" />
 
                     <div className="container-fluid">
+                        {/* Hiển thị tổng quan tài chính */}
                         <Row>
-                            {[{ title: 'Số Dư', value: balance }, { title: 'Tổng Thu Nhập', value: totalIncome }, { title: 'Tổng Chi Tiêu', value: totalExpense }].map((item, index) => (
-                                <Col key={index} md={4}>
-                                    <Card className="mb-4 mt-4">
-                                        <Card.Body>
-                                            <Card.Title>{item.title}</Card.Title>
-                                            <Card.Text>
-                                                {item.value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
-                                            </Card.Text>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                            ))}
+                            <Balance balance={balance} />
+                            <TotalIncome totalIncome={totalIncome} />
+                            <TotalExpense totalExpense={totalExpense} />
                         </Row>
 
+                        {/* Gọi các thành phần biểu đồ và bảng */}
                         <Row>
-                            <Col md={6}>
+                            <Col md={6} sm={12}>
                                 <IncomeChart />
                             </Col>
-                            <Col md={6}>
+                            <Col md={6} sm={12}>
+                                <ExpenseChart />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={6} sm={12}>
+                                <SevenDaysChart />
+                            </Col>
+                            <Col md={6} sm={12}>
                                 <Ex_InChart totalIncome={totalIncome} totalExpense={totalExpense} />
                             </Col>
                         </Row>
-
                         <Row>
-                            <Col md={6} >
+                            <Col md={6} sm={12}>
                                 <TransactionTable />
                             </Col>
-                            <Col md={6}>
-                                <Card className="mb-4 mt-4">
-                                    <Card.Body>
-                                        <Card.Title>Chi tiêu hằng tháng</Card.Title>
-                                        <ExpenseChart />
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                        </Row>
-
-                        <Row>
-                            <Col md={6}>
-                                <SevenDaysChart />
-                            </Col>
-                            <Col md={6}>
+                            <Col md={6} sm={12}>
                                 <TransactionTable2 />
                             </Col>
                         </Row>
-
                         <Row>
-                            <Col md={6}>
-                                abc
-                            </Col>
-                            <Col md={6}>
+                            <Col md={12}>
                                 <BudgetChart />
                             </Col>
                         </Row>

@@ -21,7 +21,7 @@ const BudgetChart = () => {
     }
 
     return (
-        <Card className="mb-4 mt-4">
+        <Card className="mb-4">
             <Card.Body>
                 <div className="d-flex justify-content-between">
                     <Card.Title>Ngân sách</Card.Title>

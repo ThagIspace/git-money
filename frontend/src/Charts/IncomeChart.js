@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { FaEllipsisV } from 'react-icons/fa';
 import SelectableModal from '../components/SelectableModal'; // Import SelectableModal
+import { Card } from 'react-bootstrap';
 
 const IncomeChart = () => {
     const { incomes } = useContext(IncomeContext);
@@ -31,7 +32,7 @@ const IncomeChart = () => {
     ];
 
     return (
-        <div className="mt-4" style={{ border: '1px solid #ccc', borderRadius: '20px', overflow: 'hidden' }}>
+        <Card className='mb-4' style={{ overflow: 'hidden' }}>
             <TableContainer component={Paper} className="p-3">
                 <div className="d-flex justify-content-between align-items-center mb-2">
                     <Typography style={{ fontWeight: 'bold', fontSize: '1rem' }} gutterBottom>
@@ -63,7 +64,7 @@ const IncomeChart = () => {
                 title="CÁC THU NHẬP"
                 options={options} // Truyền các tùy chọn
             />
-        </div>
+        </Card>
     );
 };
 
