@@ -1,9 +1,8 @@
 // DashboardP.js
 import React, { useState, useEffect, useContext } from 'react';
-import { useLocation } from 'react-router-dom';
 import { IncomeContext } from '../context/IncomeContext';
 import { ExpenseContext } from '../context/ExpenseContext';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Row, Col, Card } from 'react-bootstrap';
 import { ExpenseChart } from '../charts/ExpenseChart';
 import TransactionTable from '../charts/TransactionTable';
 import TransactionTable2 from '../charts/TransactionTable2';
@@ -12,9 +11,10 @@ import IncomeChart from '../charts/IncomeChart';
 import Ex_InChart from '../charts/Ex_InChart';
 import Nav from '../components/Nav';
 import TopBar from '../components/Topbar';
-import Sidebar from '../components/Sidebar'; // Import Sidebar
+import Sidebar from '../components/Sidebar';
 import '../assets/style/sidebar.css';
 import axios from 'axios';
+import BudgetChart from '../charts/BudgetChart';
 
 const DashboardP = () => {
     const [isSidebarVisible, setSidebarVisible] = useState(false);
@@ -97,6 +97,15 @@ const DashboardP = () => {
                             </Col>
                             <Col md={6}>
                                 <TransactionTable2 />
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col md={6}>
+                                abc
+                            </Col>
+                            <Col md={6}>
+                                <BudgetChart />
                             </Col>
                         </Row>
                     </div>
