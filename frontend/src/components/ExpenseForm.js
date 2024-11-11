@@ -40,7 +40,6 @@ const ExpenseForm = ({ formData, handleInputChange, handleSubmit, budgets, onCan
                     ))}
                 </Form.Control>
             </Form.Group>
-
             <Form.Group controlId="description" className="mt-3">
                 <Form.Label>Mô Tả</Form.Label>
                 <Form.Control

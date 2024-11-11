@@ -7,13 +7,12 @@ import DashboardP from './pages/DashboardP.js';
 import AddExpenseP from './pages/AddExpenseP';
 import AddIncomeP from './pages/AddIncomeP';
 import AddBudgetP from './pages/AddBudgetP.js';
-import AddTransactionP from './pages/AddTransactionP.js';
+import TransactionP from './pages/TransactionP.js';
 import ErrorP from './pages/ErrorP'; // Import the ErrorP component
 
 // List
 import ExpenseList from '../src/components/ExpenseList.js';
 import IncomeList from '../src/components/IncomeList.js';
-import TransactionList from '../src/components/TransactionList.js';
 import BudgetList from '../src/components/BudgetList.js';
 import Login from './components/Login.js';
 import Register from './components/Register.js';
@@ -52,7 +51,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/add-transit',
-    element: <AddTransactionP />,
+    element: <TransactionP />,
     errorElement: <ErrorP />,
   },
   {
@@ -78,11 +77,6 @@ const router = createBrowserRouter([
   {
     path: '/list-income',
     element: <IncomeList />,
-    errorElement: <ErrorP />,
-  },
-  {
-    path: '/list-transit',
-    element: <TransactionList />,
     errorElement: <ErrorP />,
   },
   {

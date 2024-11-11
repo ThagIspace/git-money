@@ -25,7 +25,8 @@ export const IncomeProvider = ({ children }) => {
         try {
             const response = await axios.post('http://localhost:5000/api/v1/add-income', income);
             if (response.status === 200 || response.status === 201) {
-                setIncomes(prev => [...prev, response.data]);
+                // Instead of just updating the local state, fetch the updated list from the server
+                await fetchIncomes();
             }
         } catch (error) {
             console.error('Error adding income:', error);

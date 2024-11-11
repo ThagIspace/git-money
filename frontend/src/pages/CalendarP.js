@@ -5,21 +5,21 @@ import CalendarList from '../components/CalendarList';
 import TopBar from '../components/Topbar';
 import Nav from '../components/Nav';
 import Sidebar from '../components/Sidebar';
-import IncomeForm from '../components/IncomeForm'; // Import IncomeForm
-import ExpenseForm from '../components/ExpenseForm'; // Import ExpenseForm
-import { Modal } from 'react-bootstrap'; // Import Modal từ react-bootstrap
-import { BudgetContext } from '../context/BudgetContext'; // Import BudgetContext
+import IncomeForm from '../components/IncomeForm';
+import ExpenseForm from '../components/ExpenseForm';
+import { Modal } from 'react-bootstrap';
+import { BudgetContext } from '../context/BudgetContext';
 import '../assets/style/calendar.css';
 
 const CalendarP = () => {
-    const { budgets } = useContext(BudgetContext); // Lấy budgets từ context
+    const { budgets } = useContext(BudgetContext);
     const { expenses, editingExpense, setEditingExpense, updateExpense } = useContext(ExpenseContext);
     const { incomes, editingIncome, setEditingIncome, updateIncome } = useContext(IncomeContext);
     const [currentDate, setCurrentDate] = useState(new Date());
     const [selectedDay, setSelectedDay] = useState(null);
     const [detailVisible, setDetailVisible] = useState(false);
     const [isSidebarVisible, setSidebarVisible] = useState(false);
-    const [isModalVisible, setModalVisible] = useState(false); // Trạng thái kiểm soát hiển thị Modal
+    const [isModalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {
         if (editingIncome || editingExpense) {

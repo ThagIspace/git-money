@@ -27,7 +27,7 @@ export const ExpenseProvider = ({ children }) => {
         try {
             const response = await axios.post('http://localhost:5000/api/v1/add-expense', expense);
             if (response.status === 200 || response.status === 201) {
-                setExpenses(prevExpenses => [...prevExpenses, response.data]);
+                await fetchExpenses(); // Thay đổi: Gọi lại fetchExpenses để đảm bảo danh sách được làm mới
                 if (updateBudgetSpent) {
                     updateBudgetSpent(expense.category, expense.amount);
                 }
@@ -55,15 +55,10 @@ export const ExpenseProvider = ({ children }) => {
     const updateExpense = async (updatedExpense) => {
         try {
             const response = await axios.put(`http://localhost:5000/api/v1/update-expense/${updatedExpense._id}`, updatedExpense);
-            const expenseIndex = expenses.findIndex(expense => expense._id === updatedExpense._id);
-
-            if (expenseIndex !== -1) {
-                const oldExpense = expenses[expenseIndex];
-                const updatedExpenses = [...expenses];
-                updatedExpenses[expenseIndex] = response.data.updatedExpense; // Cập nhật đúng dữ liệu từ phản hồi
-                setExpenses(updatedExpenses);
-
-                if (updateBudgetSpent) {
+            if (response.status === 200 || response.status === 201) {
+                await fetchExpenses(); // Thay đổi: Gọi lại fetchExpenses để đảm bảo danh sách được làm mới
+                const oldExpense = expenses.find(expense => expense._id === updatedExpense._id);
+                if (updateBudgetSpent && oldExpense) {
                     // Cập nhật ngân sách khi có thay đổi
                     if (oldExpense.category !== updatedExpense.category) {
                         updateBudgetSpent(oldExpense.category, -oldExpense.amount);
@@ -77,7 +72,6 @@ export const ExpenseProvider = ({ children }) => {
             console.error('Error updating expense:', error);
         }
     };
-
 
     useEffect(() => {
         fetchExpenses();
