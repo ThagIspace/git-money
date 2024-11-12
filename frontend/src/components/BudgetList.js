@@ -1,11 +1,15 @@
-// components/BudgetList.js
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { BudgetContext } from '../context/BudgetContext';
 import { Card, Button, ProgressBar, Row, Col } from 'react-bootstrap';
 import Swal from 'sweetalert2';
+import Pagination from './Pagination';
+import { TextField } from '@mui/material'; // Thêm TextField
 
 const BudgetList = () => {
     const { budgets, deleteBudget, loading, fetchBudgets } = useContext(BudgetContext);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState(''); // Thêm state cho tìm kiếm
+    const itemsPerPage = 3;
 
     useEffect(() => {
         fetchBudgets();
@@ -23,11 +27,7 @@ const BudgetList = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 deleteBudget(id);
-                Swal.fire(
-                    'Đã xóa!',
-                    'Ngân sách đã được xóa thành công.',
-                    'success'
-                );
+                Swal.fire('Đã xóa!', 'Ngân sách đã được xóa thành công.', 'success');
             }
         });
     };
@@ -36,11 +36,36 @@ const BudgetList = () => {
         return <div className="text-center my-5"><span>Đang tải...</span></div>;
     }
 
+    // Logic lọc dữ liệu dựa trên từ khóa tìm kiếm
+    const filteredBudgets = budgets.filter(
+        (budget) =>
+            budget.name.toLowerCase().includes(searchTerm.toLowerCase()) || // Lọc theo tên
+            (budget.amount && budget.amount.toString().includes(searchTerm)) // Lọc theo số tiền
+    );
+
+    // Logic phân trang
+    const totalItems = filteredBudgets.length;
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const currentData = filteredBudgets.slice(startIndex, startIndex + itemsPerPage);
+
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
+
     return (
         <div className="container mt-5">
-            <h2 className="text-center mb-4">Danh sách Ngân Sách</h2>
+            <div className="d-flex justify-content-between align-items-center mb-3">
+                <h2 className="text-center">Danh sách Ngân Sách</h2>
+                <TextField
+                    label="Tìm theo tên và số tiền"
+                    variant="outlined"
+                    size="small"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            </div>
             <Row>
-                {budgets.map((budget) => {
+                {currentData.map((budget) => {
                     const spent = budget.spent || 0;
                     const amount = budget.amount || 0;
                     const remaining = amount - spent;
@@ -73,6 +98,14 @@ const BudgetList = () => {
                     <p>Không có dữ liệu</p>
                 </div>
             )}
+
+            {/* Sử dụng component Pagination */}
+            <Pagination
+                totalItems={totalItems}
+                itemsPerPage={itemsPerPage}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+            />
         </div>
     );
 };

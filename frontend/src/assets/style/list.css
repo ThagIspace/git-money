@@ -1,0 +1,57 @@
+.abc-list-container {
+    width: 100%;
+    overflow-x: auto; /* Ensures horizontal scroll if needed for very narrow screens */
+}
+
+.abc-list {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.abc-list th,
+.abc-list td {
+    padding: 8px;
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    .abc-list-container {
+        width: 100%;
+        overflow-x: auto; /* Allows scrolling if absolutely needed */
+    }
+
+    .abc-list {
+        display: block; /* Change table to block layout */
+    }
+
+    .abc-list thead {
+        display: none; /* Hide the table header */
+    }
+
+    .abc-list tbody {
+        display: block;
+    }
+
+    .abc-list tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd; /* Optional styling for separation */
+    }
+
+    .abc-list tbody tr td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border-bottom: 1px solid #ddd; /* Optional styling */
+    }
+
+    .abc-list tbody tr td:last-child {
+        border-bottom: none;
+    }
+
+    .abc-list tbody tr td::before {
+        content: attr(data-label); /* Use data-label attribute for headers */
+        flex: 0 0 40%;
+        font-weight: bold;
+    }
+}

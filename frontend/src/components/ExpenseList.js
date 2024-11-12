@@ -1,5 +1,4 @@
-// ExpenseList.js
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { ExpenseContext } from '../context/ExpenseContext';
 import {
     Table,
@@ -12,13 +11,19 @@ import {
     IconButton,
     Typography,
     CircularProgress,
+    TextField
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import Pagination from './Pagination';
 import Swal from 'sweetalert2';
+import '../assets/style/list.css'
 
 const ExpenseList = () => {
     const { expenses, deleteExpense, setEditingExpense, loading } = useContext(ExpenseContext);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState(''); // State for search input
+    const itemsPerPage = 5;
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -49,13 +54,40 @@ const ExpenseList = () => {
         );
     }
 
+    // Filter logic based on search term
+    const filteredExpenses = expenses.filter(
+        (expense) =>
+            expense.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (expense.amount && expense.amount.toString().includes(searchTerm)) ||
+            (expense.category && expense.category.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+
+
+    // Pagination logic
+    const totalItems = filteredExpenses.length;
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const currentData = filteredExpenses.slice(startIndex, startIndex + itemsPerPage);
+
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
+
     return (
         <div className="container mt-5">
-            <Typography variant="h4" gutterBottom>
-                Danh Sách Chi Tiêu
-            </Typography>
-            <TableContainer component={Paper} className="mt-4">
-                <Table aria-label="expenses table">
+            <div className="d-flex justify-content-between align-items-center mb-3">
+                <Typography variant="h4" gutterBottom>
+                    Danh Sách Chi Tiêu
+                </Typography>
+                <TextField
+                    label="Tìm theo tên, danh mục, số tiền"
+                    variant="outlined"
+                    size="small"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            </div>
+            <TableContainer component={Paper} className="mt-4 abc-list-container">
+                <Table className="abc-list">
                     <TableHead>
                         <TableRow>
                             <TableCell>Tiêu Đề</TableCell>
@@ -67,14 +99,14 @@ const ExpenseList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {expenses.map((expense) => (
+                        {currentData.map((expense) => (
                             <TableRow key={expense._id || Math.random().toString(36).substr(2, 9)}>
-                                <TableCell>{expense.title}</TableCell>
-                                <TableCell>{expense.amount ? `${expense.amount.toLocaleString('vi-VN')} đ` : 'N/A'}</TableCell>
-                                <TableCell>{expense.category}</TableCell>
-                                <TableCell>{expense.description}</TableCell>
-                                <TableCell>{new Date(expense.date).toLocaleDateString()}</TableCell>
-                                <TableCell>
+                                <TableCell data-label="Tiêu Đề">{expense.title}</TableCell>
+                                <TableCell data-label="Số Tiền">{expense.amount ? `${expense.amount.toLocaleString('vi-VN')} đ` : 'N/A'}</TableCell>
+                                <TableCell data-label="Danh Mục">{expense.category}</TableCell>
+                                <TableCell data-label="Mô Tả">{expense.description}</TableCell>
+                                <TableCell data-label="Ngày">{new Date(expense.date).toLocaleDateString()}</TableCell>
+                                <TableCell data-label="Hành Động">
                                     <IconButton onClick={() => handleEdit(expense)} color="primary">
                                         <EditIcon />
                                     </IconButton>
@@ -84,7 +116,7 @@ const ExpenseList = () => {
                                 </TableCell>
                             </TableRow>
                         ))}
-                        {expenses.length === 0 && (
+                        {currentData.length === 0 && (
                             <TableRow>
                                 <TableCell colSpan={6} align="center">
                                     Không có dữ liệu
@@ -94,6 +126,14 @@ const ExpenseList = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+
+            {/* Pagination Controls */}
+            <Pagination
+                totalItems={totalItems}
+                itemsPerPage={itemsPerPage}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+            />
         </div>
     );
 };

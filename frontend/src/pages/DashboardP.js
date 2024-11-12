@@ -3,8 +3,8 @@ import { IncomeContext } from '../context/IncomeContext';
 import { ExpenseContext } from '../context/ExpenseContext';
 import { Row, Col } from 'react-bootstrap';
 import Balance from '../charts/Balance';
-import TotalIncome from '../charts/TotalIncome';
-import TotalExpense from '../charts/TotalExpense';
+import ThisMonth from '../charts/ThisMonth';
+import LastMonth from '../charts/LastMonth';
 import { ExpenseChart } from '../charts/ExpenseChart';
 import TransactionTable from '../charts/TransactionTable';
 import TransactionTable2 from '../charts/TransactionTable2';
@@ -44,9 +44,9 @@ const DashboardP = () => {
                     <div className="container-fluid">
                         {/* Hiển thị tổng quan tài chính */}
                         <Row>
-                            <Balance balance={balance} />
-                            <TotalIncome totalIncome={totalIncome} />
-                            <TotalExpense totalExpense={totalExpense} />
+                            <Balance balance={balance} totalIncome={totalIncome} totalExpense={totalExpense} />
+                            <ThisMonth />
+                            <LastMonth />
                         </Row>
 
                         {/* Gọi các thành phần biểu đồ và bảng */}
