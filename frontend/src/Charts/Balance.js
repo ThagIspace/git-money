@@ -3,7 +3,7 @@ import { Card, Col } from 'react-bootstrap';
 
 const Balance = ({ balance, totalIncome, totalExpense }) => (
     <Col md={4} sm={12}>
-        <Card className="mb-4 mt-4">
+        <Card className="mt-5">
             <Card.Body>
                 <Card.Title>Tóm Tắt</Card.Title>
                 <div className="d-flex justify-content-between">

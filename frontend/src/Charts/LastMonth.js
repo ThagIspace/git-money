@@ -62,7 +62,7 @@ const LastMonth = () => {
 
     return (
         <Col md={4} sm={12}>
-            <Card className="mb-4 mt-4">
+            <Card className="mt-5">
                 <Card.Body>
                     <div className="d-flex justify-content-between">
                         <div style={{ width: '50%' }}>

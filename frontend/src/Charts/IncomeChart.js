@@ -32,7 +32,7 @@ const IncomeChart = () => {
     ];
 
     return (
-        <Card className='mb-4' style={{ overflow: 'hidden' }}>
+        <Card className='mt-4 mb-4' style={{ overflow: 'hidden' }}>
             <TableContainer component={Paper} className="p-3">
                 <div className="d-flex justify-content-between align-items-center mb-2">
                     <Typography style={{ fontWeight: 'bold', fontSize: '1rem' }} gutterBottom>

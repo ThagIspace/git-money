@@ -27,7 +27,6 @@
     max-width: 100vw;
     overflow-x: hidden;
     transition: padding-left 0.3s ease;
-    margin-top: 3rem;
 }
 
 #wrapper.sidebar-open #page-content-wrapper {
@@ -38,10 +37,41 @@
     background-color: var(--bg-color);
 }
 
+.sidebar-heading {
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding: 1rem;
+    text-align: center;
+}
+
+.list-group-item {
+    display: flex;
+    align-items: center;
+    color: #333;
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    transition: background-color 0.3s ease;
+    background-color: var(--bg-color) !important;
+}
+
+.list-group-item .icon {
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+
+.list-group-item .label {
+    flex: 1;
+}
+
 .list-group-item.active {
     font-weight: bold;
     color: var(--active-color) !important;
-    background-color: transparent !important;
-    border: none !important;
+    background-color: #e9ecef !important;
+    border-left: 4px solid #007bff !important;
     border-bottom: 1px solid var(--border-color) !important;
+}
+
+.list-group-item:hover {
+    background-color: #e9ecef !important;
+    color: #007bff !important;
 }
